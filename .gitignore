@@ -1,6 +1,6 @@
 .env
 
-/vendor
+vendor/
 
-/cache
-/logs
+cache/
+logs/
