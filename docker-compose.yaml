@@ -1,0 +1,71 @@
+services:
+
+  mysql:
+      image: mysql:latest
+      container_name: db
+      environment:
+        - MYSQL_ROOT_PASSWORD=${ROOTP}
+        - MYSQL_DATABASE=${DBNAME}
+        - MYSQL_USER=${DBUSER}
+        - MYSQL_PASSWORD=${DBPWD}
+      networks:
+        - network_api_db
+        - network_db_pma
+      volumes:
+        - vol_db:/var/lib/mysql
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: api
+    ports:
+      - 8081:80
+    volumes:
+      - ./api:/var/www
+    networks:
+      - network_api_admin
+      - network_api_db
+      - network_api_portal
+    environment:
+      - DBNAME=${DBNAME}
+      - DBUSER=${DBUSER}
+      - DBPWD=${DBPWD}
+      - PMA_HOST=${PMA_HOST}
+    
+  admin:
+    image: php:8.2-apache
+    container_name: admin
+    volumes:
+      - ./admin:/var/www
+    networks:
+      - network_api_admin
+    
+  portal:
+    image: php:8.2-apache
+    container_name: portal
+    volumes:
+      - ./portal:/var/www
+    networks:
+      - network_api_portal
+    ports:
+      - 8080:80
+
+  phpmyadmin:
+    image: phpmyadmin:5.2
+    container_name: pma
+    networks:
+      - network_db_pma
+    environment:
+      - PMA_HOST=${PMA_HOST}
+    ports:
+      - 8060:80
+
+networks:
+  network_api_db:
+  network_api_admin:
+  network_api_portal:
+  network_db_pma:
+
+volumes:
+  vol_db:
