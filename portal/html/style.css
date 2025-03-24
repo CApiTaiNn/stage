@@ -1,0 +1,120 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif; 
+}
+
+ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    margin: 0 5px;
+}
+
+li img {
+    width: 30px; 
+    height: auto;
+}
+
+li img:hover{
+    cursor: pointer;
+}
+
+article img{
+    width: 100%;
+    height: auto;
+}
+
+h3{
+    font-size: xx-large;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+article {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+form label {
+    margin-top: 10px;
+    text-align: left;
+}
+
+form p{
+    opacity: 0.7;
+    font-size: 0.8em;
+}
+
+.cgu{
+    flex-direction: row;
+    margin: 10px;
+}
+
+form input, form button {
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form button {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+
+@media screen and (max-width: 400px) {
+    body {
+        flex-direction: column;
+    }
+
+    h3{
+        font-size: x-large;
+    }
+}
+
+#form{
+    visibility: visible;
+}
+
+#message {
+    visibility: hidden;
+}
