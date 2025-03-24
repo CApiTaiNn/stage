@@ -9,9 +9,8 @@
             $this->userModel = new UserModel();
         }
 
-        function getUsers(){
-            $Users = $this->userModel->getUsers();
-            return $Users;
+        public function getUsers(){
+            return $this->userModel->getUsers();
         }
     }
 ?>

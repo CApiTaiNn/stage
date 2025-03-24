@@ -1,6 +1,6 @@
 <?php
 
-    require_once __DIR__ . '/../models/Database.php';
+    require_once __DIR__ . '/../config/Database.php';
 
     class UserModel{
         private $conn;

@@ -17,10 +17,11 @@ $app->get('/', function (Request $request, Response $response) {
 });
 
 
-$app->get('/users', function ($request, $response) {
+$app->get('/users', function (Request $request, Response $response) use ($userController) {
     $users = $userController->getUsers();
-    $response->getBody()->write($json_encode($users));
+    $response->getBody()->write(json_encode($users));
     return $response->withHeader('Content-Type', 'application/json');
 });
+
 
 $app->run();
