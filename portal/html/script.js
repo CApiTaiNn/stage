@@ -46,7 +46,10 @@ document.addEventListener('DOMContentLoaded', function() {
             return response.json();
         })
         .then(data => {
-            responseMessage.textContent = JSON.stringify(data);
+            document.getElementById('form').style.visibility = 'hidden';
+            responseMessage.style.visibility = 'visible';
+            responseMessage.textContent = data;
+            
         })
         .catch(error => {
             console.error('Error:', error);

@@ -14,16 +14,6 @@
     $db = new Database();
     $userController = new UserController();
 
-    /* Middleware pour gérer les en-têtes CORS
-    $app->add(function (Request $request, $handler) {
-        $response = $handler->handle($request);
-        $response = $response
-            ->withHeader('Access-Control-Allow-Origin', '*')
-            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-        return $response;
-    });
-    */
 
     //REQUESTS GET
     $app->get('/', function (Request $request, Response $response) {
@@ -46,6 +36,8 @@
     });
 
 
+
+    //REQUESTS OPTIONS
     $app->options('/{routes:.+}', function (Request $request, Response $response) {
         return $response->withHeader('Access-Control-Allow-Origin', '*')
                         ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')

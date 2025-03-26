@@ -20,5 +20,9 @@
         public function createUser($user){
             return $this->userModel->createUser($user);
         }
+
+        public function getIp(){
+            return $this->userModel->getIp();
+        }
     }
 ?>
