@@ -6,11 +6,11 @@
         private $password;
         private $conn;
 
-        public function __construct() {
+        public function __construct($dbname, $client, $pass) {
             $this->host = getenv('PMA_HOST');
-            $this->db_name = getenv('DBNAME');
-            $this->username = getenv('DBUSER');
-            $this->password = getenv('DBPWD');
+            $this->db_name = $dbname;
+            $this->username = $client;
+            $this->password = $pass;
         }
 
         // Méthode pour établir la connexion à la base de données

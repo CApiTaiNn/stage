@@ -6,11 +6,15 @@
         private $userModel;
 
         public function __construct(){
-            $this->userModel = new UserModel();
+            $this->userModel = new UserModel($db);
         }
 
         public function getUsers(){
             return $this->userModel->getUsers();
+        }
+
+        public function createUser($user){
+            return $this->userModel->createUser($user);
         }
     }
 ?>

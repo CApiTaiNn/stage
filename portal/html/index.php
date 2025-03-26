@@ -1,5 +1,5 @@
 <?php
-    $organisation = $_GET['orga'];
+    $organisation = $_GET['orga'] ?? " ";
     $base = "BaseClientA";
 ?>
 <!DOCTYPE html>
@@ -22,9 +22,9 @@
             <article id="form">
                 <img src="logo/<?=$organisation?>.png" alt="logo organisation">
                 <h3 data-lang-fr="Formulaire de connexion" data-lang-en="Login Form">Formulaire de connexion</h3>
-                <form id="loginForm" method="post">
+                <form id="loginForm">
 
-                    <input type="hidden" name="token" value="<?=$base?>">
+                    <input type="text" name="base" id="base" value=<?=$base?> hidden>
 
                     <label for="nom" data-lang-fr="Nom" data-lang-en="Name">Nom</label>
                     <input type="text" name="nom" id="nom" required>
@@ -44,7 +44,7 @@
                         <label for="cgu" data-lang-fr="J'accepte les conditions générales d'utilisations" data-lang-en="I accept the terms and conditions">J'accepte les conditions générales d'utilisations</label>
                     </div>
 
-                    <button type="submit" data-lang-fr="Recevoir mon mot de passe" data-lang-en="Receive my password">Recevoir mon mot de passe</button>
+                    <button id='submit' type="submit" data-lang-fr="Recevoir mon mot de passe" data-lang-en="Receive my password">Recevoir mon mot de passe</button>
                 </form>
             </article>
             <article >
