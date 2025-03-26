@@ -6,7 +6,11 @@
         private $userModel;
 
         public function __construct(){
-            $this->userModel = new UserModel($db);
+            $this->userModel = new UserModel();
+        }
+
+        public function setDB($db){
+            $this->userModel->setDB($db->getConnection());
         }
 
         public function getUsers(){

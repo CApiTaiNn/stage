@@ -26,18 +26,18 @@
 
                     <input type="text" name="base" id="base" value=<?=$base?> hidden>
 
-                    <label for="nom" data-lang-fr="Nom" data-lang-en="Name">Nom</label>
-                    <input type="text" name="nom" id="nom" required>
+                    <label for="name" data-lang-fr="Nom" data-lang-en="Name">Nom</label>
+                    <input type="text" name="name" id="name" required>
 
-                    <label for="prenom" data-lang-fr="Prénom" data-lang-en="First Name">Prénom</label>
-                    <input type="text" name="prenom" id="prenom" required>
+                    <label for="firstname" data-lang-fr="Prénom" data-lang-en="First Name">Prénom</label>
+                    <input type="text" name="firstname" id="firstname" required>
 
                     <label for="email" data-lang-fr="Email" data-lang-en="Email">Email</label>
                     <input type="email" name="email" id="email">
                     <p data-lang-fr="Vous recevrez sur cette email vos identifiants de connexion" data-lang-en="You will receive your login credentials on this email">Vous recevrez sur cette email vos identifiants de connexion</p>
 
-                    <label for="telephone" data-lang-fr="Téléphone" data-lang-en="Phone">Téléphone</label>
-                    <input type="text" name="telephone" id="telephone" required>
+                    <label for="phone" data-lang-fr="Téléphone" data-lang-en="Phone">Téléphone</label>
+                    <input type="text" name="phone" id="phone" required>
 
                     <div class="cgu">
                         <input type="checkbox" name="cgu" id="cgu" required>
