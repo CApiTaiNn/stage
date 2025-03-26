@@ -22,13 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
     submitButton.addEventListener('click', function(event) {
         event.preventDefault();
 
-        //test si on entre dans la fonction
-        console.log('submit');
-
+        const orga = document.getElementById('base').value;
         const form = document.getElementById('loginForm');
         const formData = new FormData(form);
         const apiUrl = "http://localhost:8081/login";
-        const responseMessage = document.getElementById('message');
+
 
         const requestOption = {
             method: 'POST',
@@ -43,13 +41,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!response.ok) {
                 throw new Error("HTTP error " + response.status);
             }
-            return response.json();
+            return response;
         })
         .then(data => {
-            document.getElementById('form').style.visibility = 'hidden';
-            responseMessage.style.visibility = 'visible';
-            responseMessage.textContent = data;
-            
+            window.location.href = `authentication.php?orga=${orga}`;
         })
         .catch(error => {
             console.error('Error:', error);

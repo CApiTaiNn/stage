@@ -114,7 +114,3 @@ form button:hover {
 #form{
     visibility: visible;
 }
-
-#message {
-    visibility: hidden;
-}

@@ -1,6 +1,5 @@
 <?php
-    $organisation = $_GET['orga'] ?? " ";
-    $base = "BaseClientA";
+    $orga = $_GET['orga'] ?? " ";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -20,19 +19,19 @@
     <main>
         <section>
             <article id="form">
-                <img src="logo/<?=$organisation?>.png" alt="logo organisation">
+                <img src="logo/<?=$orga?>.png" alt="logo organisation">
                 <h3 data-lang-fr="Formulaire d'authentification" data-lang-en="Authentification Form">Formulaire de connexion</h3>
                 <form id="autForm">
 
-                    <input type="text" name="base" id="base" value=<?=$base?> hidden>
+                    <input type="text" name="orga" id="orga" value=<?=$orga?> hidden>
 
-                    <label for="name" data-lang-fr="Nom" data-lang-en="Name">Nom</label>
-                    <input type="text" name="name" id="name" required>
+                    <label for="id" data-lang-fr="Identifiant" data-lang-en="id">Id</label>
+                    <input type="text" name="id" id="id" required>
 
-                    <label for="firstname" data-lang-fr="Prénom" data-lang-en="First Name">Prénom</label>
-                    <input type="text" name="firstname" id="firstname" required>
+                    <label for="code">Prénom</label>
+                    <input type="text" name="code" id="code" required>
 
-                    <button id='submit' type="submit" data-lang-fr="Recevoir mon mot de passe" data-lang-en="Receive my password">Recevoir mon mot de passe</button>
+                    <button id='submit' type="submit" data-lang-fr="S'authentifier" data-lang-en="Login">S'authentifier</button>
                 </form>
             </article>
             <article >

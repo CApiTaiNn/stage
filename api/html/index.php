@@ -3,6 +3,7 @@
     require __DIR__ . '/../vendor/autoload.php';
     require __DIR__ . '/../src/controllers/UserController.php';
     require __DIR__ . '/../src/config/Database.php';
+    require __DIR__ . '/../src/utils/generator.php';
 
     use Slim\Factory\AppFactory;
     use Psr\Http\Message\ResponseInterface as Response;

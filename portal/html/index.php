@@ -1,6 +1,5 @@
 <?php
-    $organisation = $_GET['orga'] ?? " ";
-    $base = "BaseClientA";
+    $orga = $_GET['orga'] ?? " ";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -20,11 +19,11 @@
     <main>
         <section>
             <article id="form">
-                <img src="logo/<?=$organisation?>.png" alt="logo organisation">
+                <img src="logo/<?=$orga?>.png" alt="logo organisation">
                 <h3 data-lang-fr="Formulaire de connexion" data-lang-en="Login Form">Formulaire de connexion</h3>
                 <form id="loginForm">
 
-                    <input type="text" name="base" id="base" value=<?=$base?> hidden>
+                    <input type="text" name="orga" id="orga" value=<?=$orga?> hidden>
 
                     <label for="name" data-lang-fr="Nom" data-lang-en="Name">Nom</label>
                     <input type="text" name="name" id="name" required>
@@ -46,9 +45,6 @@
 
                     <button id='submit' type="submit" data-lang-fr="Recevoir mon mot de passe" data-lang-en="Receive my password">Recevoir mon mot de passe</button>
                 </form>
-            </article>
-            <article >
-                <p id="message">Un mail vous a été envoyé avec vos identifiants</p>
             </article>
         </section>
     </main>
