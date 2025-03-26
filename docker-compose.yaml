@@ -5,9 +5,6 @@ services:
       container_name: db
       environment:
         - MYSQL_ROOT_PASSWORD=${ROOTP}
-        - MYSQL_DATABASE=${DBNAME}
-        - MYSQL_USER=${DBUSER}
-        - MYSQL_PASSWORD=${DBPWD}
       networks:
         - network_api_db
         - network_db_pma
@@ -23,14 +20,13 @@ services:
       - 8081:80
     volumes:
       - ./api:/var/www
+    env_file:
+      - path : ./.env
     networks:
       - network_api_admin
       - network_api_db
       - network_api_portal
     environment:
-      - DBNAME=${DBNAME}
-      - DBUSER=${DBUSER}
-      - DBPWD=${DBPWD}
       - PMA_HOST=${PMA_HOST}
     
   admin:
