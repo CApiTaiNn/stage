@@ -32,5 +32,24 @@
 
             return $stmt->execute();
         }
+
+        function valideAuth($email, $auth_id, $auth_pass) {
+            $query = "SELECT auth_id, auth_pass FROM Sessions
+                      JOIN Users ON Sessions.id_user = Users.id_user
+                      WHERE Users.email = :email";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            
+    
+            if ($result && $result['auth_id'] == $auth_id && $auth_pass == $result['auth_pass']) {
+                var_dump($result);
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 ?>

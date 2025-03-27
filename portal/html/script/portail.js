@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
 
         const orga = document.getElementById('orga').value;
+        const email = document.getElementById('email').value;
         const form = document.getElementById('loginForm');
         const formData = new FormData(form);
         const apiUrl = "http://localhost:8081/login";
@@ -44,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return response;
         })
         .then(data => {
-            window.location.href = `authentication.php?orga=${orga}`;
+            window.location.href = `authentication.php?orga=${orga}&email=${email}`;
         })
         .catch(error => {
             console.error('Error:', error);
