@@ -1,9 +1,12 @@
 <?php
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
 
     require __DIR__ . '/../vendor/autoload.php';
     require __DIR__ . '/../src/controllers/UserController.php';
+    require __DIR__ . '/../src/controllers/SessionController.php';
     require __DIR__ . '/../src/config/Database.php';
-    require __DIR__ . '/../src/utils/generator.php';
+    require __DIR__ . '/../src/utils/sendMail.php';
 
     use Slim\Factory\AppFactory;
     use Psr\Http\Message\ResponseInterface as Response;
@@ -11,10 +14,12 @@
 
     $app = AppFactory::create();
 
-    //Controller et DB
+    //Création de DB sans configuration
     $db = new Database();
-    $userController = new UserController();
 
+    //Création des controllers
+    $userController = new UserController();
+    $sessionController = new SessionController();
 
     //REQUESTS GET
     $app->get('/', function (Request $request, Response $response) {
@@ -22,14 +27,27 @@
         return $response;
     });
 
-
     //REQUESTS POST
-    $app->post('/login', function (Request $request, Response $response) use ($db, $userController) {
+    $app->post('/login', function (Request $request, Response $response) use ($db, $userController, $sessionController) {
+        //Récupération des données
         $data = json_decode($request->getBody()->getContents(), true);
-        $config = $db->getDatabaseConfig($data['base']);
-        $db->setDB($data['base'], $config['username'], $config['password']);
+
+        //Recupération de la base de données
+        $config = $db->getDatabaseConfig($data['orga']);
+
+        //Connexion à la base de données
+        $db->setDB($data['orga'], $config['username'], $config['password']);
         $userController->setDB($db);
+        $sessionController->setDB($db);
+
+        //Envoie du mail avec les codes
+        $code = sendMail($data['orga'], $data['email'], $data['name']);
+
+        
+        //Création de l'utilisateur
         if ($userController->createUser($data)) {
+            $id_user = $userController->getUserId($data['name'], $data['firstname'], $data['email']);
+            $sessionController->createSession($id_user, $code[0], $code[1]);
             return $response->withStatus(201)->withHeader('Access-Control-Allow-Origin', '*');
         } else {
             return $response->withStatus(400);

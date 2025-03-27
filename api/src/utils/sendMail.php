@@ -1,40 +1,54 @@
 <?php
     use PHPMailer\PHPMailer\PHPMailer;
     require_once __DIR__ . '/generator.php';
+    require_once __DIR__ . '/../../vendor/autoload.php';
 
     function sendMail($orga, $email, $name){
+
+        //Parametrage de PHPMailer
+        //Source et Destinataire
         $mail = new PHPMailer();
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com'; // Le serveur SMTP (ici Gmail)
         $mail->SMTPAuth = true;
-        $mail->Username = ''; // L'adresse email du compte Gmail que tu utilises pour envoyer les emails
-        $mail->Password = '1a2b3c4d5e6f7g';
+        $mail->Username = 'sloan.morgant@gmail.com'; 
+        $mail->Password = $_ENV['MAILPWD'];
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
-        $mail->setFrom('confirmation@domaine-enregistré', $orga);
+        $mail->setFrom('sloan.morgant@gmail.com', $orga);
         $mail->addAddress($email, $name);
         $mail->Subject = 'Vos identifiants de connexion';
+
+        //Génération des identifiants
+        $idLogin = generateId();
+        $idPass = generateId();
 
         // Définir le HTML 
         $mail->isHTML(TRUE);
         $mail->Body =
          '<html>
             Bonjour, <br>
+            <br>
             Voici vos identifiants de connexion : <br>
-            Identifiant : ' . generateId() . '<br>
-            Code : ' . generateId() . '<br>
+            Identifiant : ' . $idLogin . '<br>
+            Code : ' . $idPass . '<br>
             <br>
             Cordialement, <br>
             L\'équipe ' . $orga . '
         </html>';
 
-        // envoyer le message
-        if(!$mail->send()){
-            echo 'Le message na pas pu être envoyé.';
-            echo 'Erreur du Mailer : ' . $mail->ErrorInfo;
+        
+        // Envoyer le message
+        if (!$mail->send()) {
+            error_log('Erreur d\'envoi de mail : ' . $mail->ErrorInfo);
+            return false;
         } else {
-            echo 'Le message a été envoyé';
+            $code = array(
+                $idLogin,
+                $idPass
+            );
+            return $code;
         }
     }
 ?>

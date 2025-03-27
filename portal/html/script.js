@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     submitButton.addEventListener('click', function(event) {
         event.preventDefault();
 
-        const orga = document.getElementById('base').value;
+        const orga = document.getElementById('orga').value;
         const form = document.getElementById('loginForm');
         const formData = new FormData(form);
         const apiUrl = "http://localhost:8081/login";

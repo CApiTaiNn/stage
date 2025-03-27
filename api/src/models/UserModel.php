@@ -7,8 +7,6 @@
         private $email;
         private $phone;
 
-
-
         function setDB($con){
             $this->conn = $con;
         }
@@ -17,8 +15,24 @@
             $query = "SELECT * FROM Users";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-            $Users = $stmt->fetchAll();
-            return $Users;
+            
+            if ($stmt->execute()) {
+                return $stmt->fetchAll();
+            }else{
+                return false;
+            }
+        }
+
+        function getUserId($name, $firstname, $email){
+            $query = "SELECT id_user FROM Users WHERE name = :name AND firstname = :firstname AND email = :email";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':firstname', $firstname);
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result ? $result['id_user'] : null;
         }
 
         function createUser($user){

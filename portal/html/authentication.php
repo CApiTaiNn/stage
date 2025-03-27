@@ -25,10 +25,10 @@
 
                     <input type="text" name="orga" id="orga" value=<?=$orga?> hidden>
 
-                    <label for="id" data-lang-fr="Identifiant" data-lang-en="id">Id</label>
+                    <label for="id" data-lang-fr="Identifiant" data-lang-en="Id">Identifiant</label>
                     <input type="text" name="id" id="id" required>
 
-                    <label for="code">Prénom</label>
+                    <label for="code">Code</label>
                     <input type="text" name="code" id="code" required>
 
                     <button id='submit' type="submit" data-lang-fr="S'authentifier" data-lang-en="Login">S'authentifier</button>

@@ -5,7 +5,7 @@
     class UserController{
         private $userModel;
 
-        public function __construct(){
+        function __construct(){
             $this->userModel = new UserModel();
         }
 
@@ -23,6 +23,10 @@
 
         public function getIp(){
             return $this->userModel->getIp();
+        }
+
+        public function getUserId($name, $firstname, $email){
+            return $this->userModel->getUserId($name, $firstname, $email);
         }
     }
 ?>
