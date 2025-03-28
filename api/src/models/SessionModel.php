@@ -41,11 +41,8 @@
             $stmt->bindParam(':email', $email);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            
     
             if ($result && $result['auth_id'] == $auth_id && $auth_pass == $result['auth_pass']) {
-                var_dump($result);
                 return true;
             } else {
                 return false;

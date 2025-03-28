@@ -1,7 +1,4 @@
 <?php
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-
     require __DIR__ . '/../vendor/autoload.php';
     require __DIR__ . '/../src/controllers/UserController.php';
     require __DIR__ . '/../src/controllers/SessionController.php';
@@ -14,6 +11,7 @@
 
     $app = AppFactory::create();
 
+
     //Création de DB sans configuration
     $db = new Database();
 
@@ -22,10 +20,11 @@
     $sessionController = new SessionController();
 
     //REQUESTS GET
-    $app->get('/', function (Request $request, Response $response) {
-        $response->getBody()->write("hello");
+    $app->get('/', function (Request $request, Response $response) use ($userController) {
+        $response->getBody()->write($userController->getIp());
         return $response;
     });
+
 
     //REQUESTS POST
     $app->post('/login', function (Request $request, Response $response) use ($db, $userController, $sessionController) {
@@ -67,7 +66,6 @@
         $db->setDB($data['orga'], $config['username'], $config['password']);
         $sessionController->setDB($db);
 
-
         // Validation de l'authentification
         if ($sessionController->valideAuth($data['email'], $data['id'], $data['code'])) {
             // Réponse en cas de succès
@@ -79,7 +77,7 @@
             return $response->withStatus(400); 
         }
     });
-
+    
 
 
     //REQUESTS OPTIONS

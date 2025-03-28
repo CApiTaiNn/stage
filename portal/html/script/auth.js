@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     
-    const submit = document.getElementById('submit');
-    submit.addEventListener('click', function(event) {
+    const submitButton = document.getElementById('submit');
+    submitButton.addEventListener('click', function(event) {
         event.preventDefault();
 
         const form = document.getElementById('autForm');
@@ -10,12 +10,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const requestOption = {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(
-                Object.fromEntries(formData.entries())
-            )
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(Object.fromEntries(formData.entries()))
         };
-        
+
         fetch(apiUrl, requestOption)
         .then(response => {
             if (!response.ok) {
@@ -23,5 +23,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             return response;
         })
+        .then(data => {
+            console.log("Success:", data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     });
 });

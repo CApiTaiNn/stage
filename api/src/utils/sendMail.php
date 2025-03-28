@@ -35,7 +35,7 @@
             Code : ' . $idPass . '<br>
             <br>
             Cordialement, <br>
-            L\'équipe ' . $orga . '
+            L`équipe ' . $orga .'
         </html>';
 
         
