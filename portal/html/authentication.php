@@ -40,7 +40,9 @@
             <article >
                 <p id="message">Un mail vous a été envoyé avec vos identifiants</p>
             </article>
+            <p id="error-message" style="color: red; display: none;"></p>
         </section>
     </main>
+    <script src="script/auth.js"></script>
 </body>
 </html>
