@@ -22,7 +22,7 @@
             <article id="form">
                 <img src="logo/<?=$orga?>.png" alt="logo organisation">
                 <h3 data-lang-fr="Formulaire d'authentification" data-lang-en="Authentification Form">Formulaire de connexion</h3>
-                <!--  action="script/auth.php" -->
+
                 <form id="autForm" action="script/auth.php" method="post">
 
                     <input type="text" name="orga" id="orga" value=<?=$orga?> hidden>
@@ -40,8 +40,9 @@
             <article >
                 <p id="message">Un mail vous a été envoyé avec vos identifiants</p>
             </article>
+            <p id="error-message" style="color: red; display: none;"></p>
         </section>
     </main>
-    <!-- <script src="script/auth.js"></script> -->
+    <script src="script/auth.js"></script>
 </body>
 </html>

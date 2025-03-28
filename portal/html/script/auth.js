@@ -1,33 +1,23 @@
-document.addEventListener('DOMContentLoaded', function() {
-    
-    const submitButton = document.getElementById('submit');
-    submitButton.addEventListener('click', function(event) {
-        event.preventDefault();
+document.getElementById("autForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    let formData = new FormData(this);
 
-        const form = document.getElementById('autForm');
-        const formData = new FormData(form);
-        const apiUrl = "http://localhost:8081/authentification";
-
-        const requestOption = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(Object.fromEntries(formData.entries()))
-        };
-
-        fetch(apiUrl, requestOption)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("HTTP error " + response.status);
-            }
-            return response;
-        })
-        .then(data => {
-            console.log("Success:", data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+    fetch("script/auth.php", { // Appel au script PHP
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json()) // Convertir la réponse en JSON
+    .then(data => {
+        if (data.status === "success") {
+            window.location.href = data.redirect; // Rediriger si succès
+        } else {
+            document.getElementById("error-message").textContent = data.message;
+            document.getElementById("error-message").style.display = "block";
+        }
+    })
+    .catch(error => {
+        console.error("Erreur :", error);
+        document.getElementById("error-message").textContent = "Erreur de connexion au serveur.";
+        document.getElementById("error-message").style.display = "block";
     });
 });

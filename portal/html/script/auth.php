@@ -1,4 +1,6 @@
 <?php
+    header('Content-Type: application/json');
+
     // Vérifier que les champs sont bien remplis
     if (!isset($_POST['orga'], $_POST['id'], $_POST['code'], $_POST['email'])) {
         echo json_encode(["status" => "error", "message" => "Données manquantes"]);
@@ -47,11 +49,13 @@
 
     if ($result['status'] === 'success') {
         $ip = $_SERVER['REMOTE_ADDR'];
+
         // Vérifier si l'IP est valide
         if (filter_var($ip, FILTER_VALIDATE_IP)) {
             $command = "sudo /sbin/iptables -A INPUT -s $ip -j ACCEPT";
             //shell_exec($command);
-            header("Location: https://www.google.fr");
+            
+            echo json_encode(["status" => "success", "redirect" => "https://www.google.fr"]);
             exit;
         } else {
             echo json_encode(["status" => "error", "message" => "IP invalide"]);
