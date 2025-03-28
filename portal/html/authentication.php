@@ -22,7 +22,7 @@
             <article id="form">
                 <img src="logo/<?=$orga?>.png" alt="logo organisation">
                 <h3 data-lang-fr="Formulaire d'authentification" data-lang-en="Authentification Form">Formulaire de connexion</h3>
-                <!--  action="script/auth.php" -->
+
                 <form id="autForm" action="script/auth.php" method="post">
 
                     <input type="text" name="orga" id="orga" value=<?=$orga?> hidden>
@@ -42,6 +42,5 @@
             </article>
         </section>
     </main>
-    <!-- <script src="script/auth.js"></script> -->
 </body>
 </html>
