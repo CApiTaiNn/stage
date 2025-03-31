@@ -42,15 +42,16 @@
         //Envoie du mail avec les codes
         $code = sendMail($data['orga'], $data['email'], $data['name']);
 
-        
         //Vérification de l'existence de l'utilisateur
         //Si l'utilisateur n'existe pas, on le crée
         if (!$userController->ifExist($data['name'], $data['firstname'], $data['email'])) {
             $userController->createUser($data);
         }
 
-        //Puis on créer la session
+        //On recupère l'id de l'utilisateur
         $id_user = $userController->getUserId($data['name'], $data['firstname'], $data['email']);
+
+        //Puis on creer la session pour l'utilisateur
         if ($sessionController->createSession($id_user, $code[0], $code[1])) {
             return $response->withStatus(201)->withHeader('Access-Control-Allow-Origin', '*');
         }else {

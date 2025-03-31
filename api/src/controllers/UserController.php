@@ -28,5 +28,9 @@
         public function getUserId($name, $firstname, $email){
             return $this->userModel->getUserId($name, $firstname, $email);
         }
+
+        public function ifExist($name, $firstname, $email){
+            return $this->userModel->ifExist($name, $firstname, $email);
+        }
     }
 ?>

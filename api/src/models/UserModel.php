@@ -66,7 +66,7 @@
 
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             
-            return empty($result);
+            return !empty($result);
         }
 
 
