@@ -43,12 +43,17 @@
         $code = sendMail($data['orga'], $data['email'], $data['name']);
 
         
-        //Création de l'utilisateur
-        if ($userController->createUser($data)) {
-            $id_user = $userController->getUserId($data['name'], $data['firstname'], $data['email']);
-            $sessionController->createSession($id_user, $code[0], $code[1]);
+        //Vérification de l'existence de l'utilisateur
+        //Si l'utilisateur n'existe pas, on le crée
+        if (!$userController->ifExist($data['name'], $data['firstname'], $data['email'])) {
+            $userController->createUser($data);
+        }
+
+        //Puis on créer la session
+        $id_user = $userController->getUserId($data['name'], $data['firstname'], $data['email']);
+        if ($sessionController->createSession($id_user, $code[0], $code[1])) {
             return $response->withStatus(201)->withHeader('Access-Control-Allow-Origin', '*');
-        } else {
+        }else {
             return $response->withStatus(400);
         }
     });
@@ -67,9 +72,9 @@
         $sessionController->setDB($db);
 
         // Validation de l'authentification
-        if ($sessionController->valideAuth($data['email'], $data['id'], $data['code'])) {
-            // Réponse en cas de succès
-            $response->getBody()->write(json_encode(['status' => 'success']));
+        if ($idSessionUser = $sessionController->valideAuth($data['email'], $data['id'], $data['code'])) {
+            // Réponse en cas de succès, on renvoie l'id de la session et de l'utilisateur
+            $response->getBody()->write(json_encode(['status' => 'success', 'id_session' => $idSessionUser['id_session'], 'id_user' => $idSessionUser['id_user']]));
             return $response->withStatus(201); 
         } else {
             // Réponse en cas d'échec
@@ -78,6 +83,27 @@
         }
     });
     
+    //REQUESTS DELETE
+    $app->delete('/errorAuth', function (Request $request, Response $response) use ($db, $sessionController) {
+        //Récupération des données
+        $data = json_decode($request->getBody()->getContents(), true);
+
+        //Recupération de la base de données
+        $config = $db->getDatabaseConfig($data['orga']);
+
+        //Connexion à la base de données
+        $db->setDB($data['orga'], $config['username'], $config['password']);
+        $sessionController->setDB($db);
+
+        //Suppression de l'utilisateur
+        if ($sessionController->suppSession($data['id_session'], $data['id_user'])) {
+            // Réponse en cas de succès
+            return $response->withStatus(200);
+        } else {
+            // Réponse en cas d'échec
+            return $response->withStatus(400);
+        }
+    });
 
 
     //REQUESTS OPTIONS

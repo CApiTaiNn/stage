@@ -34,7 +34,7 @@
         }
 
         function valideAuth($email, $auth_id, $auth_pass) {
-            $query = "SELECT auth_id, auth_pass FROM Sessions
+            $query = "SELECT id_session, id_user, auth_id, auth_pass FROM Sessions
                       JOIN Users ON Sessions.id_user = Users.id_user
                       WHERE Users.email = :email";
             $stmt = $this->conn->prepare($query);
@@ -43,10 +43,27 @@
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
             if ($result && $result['auth_id'] == $auth_id && $auth_pass == $result['auth_pass']) {
-                return true;
+                // Authentification réussie, on peut retourner l'id de la session et id user
+                $idSessionUser = [
+                    'id_session' => $result['id_session'],
+                    'id_user' => $result['id_user']
+                ];
+                return $idSessionUser;
             } else {
                 return false;
             }
+        }
+
+        function suppSession($idSession, $idUser){
+            $query = "DELETE FROM Sessions as s
+                    JOIN Users as u
+                    ON u.id_user = s.id_user
+                    WHERE s.id_session = :idSession
+                    AND s.id_user = :idUser";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':idSession', $idSession, PDO::PARAM_INT);
+            $stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+            return $stmt->execute();
         }
     }
 ?>
