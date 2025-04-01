@@ -83,7 +83,7 @@
             return $response->withStatus(201); 
         } else {
             // Réponse en cas d'échec
-            $response->getBody()->write(json_encode(['status' => 'error', 'id_session' => $idSessionUser['id_session'], 'id_user' => $idSessionUser['id_user'], 'data' => $data]));
+            $response->getBody()->write(json_encode(['status' => 'error']));
             return $response->withStatus(400); 
         }
     });
@@ -104,7 +104,7 @@
         $sessionController->setDB($db);
 
         //Suppression de la session créer pour l'utilisateur
-        if ($sessionController->suppSession($data['id_session'], $data['id_user'])) {
+        if ($sessionController->suppSession($data['id_session'])) {
             // Réponse en cas de succès
             $response->getBody()->write(json_encode(['status' => 'success', 'message' => 'Session supprimée']));
             return $response->withStatus(200);

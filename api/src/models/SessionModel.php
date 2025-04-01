@@ -65,14 +65,11 @@
             }
         }
 
-        function suppSession($idSession, $idUser){
+        function suppSession($idSession){
             $query = "DELETE FROM Sessions
-                    WHERE id_session = :idSession
-                    AND 
-                    id_user = :idUser";
+                    WHERE id_session = :idSession";
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':idSession', $idSession, PDO::PARAM_INT);
-            $stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
             return $stmt->execute();
         }
     }

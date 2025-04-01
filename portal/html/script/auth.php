@@ -77,8 +77,7 @@
             $url = 'http://api/errorAuth';
             $data = [
                 'orga' => $orga,
-                'id_session' => $result['id_session'],
-                'id_user' => $result['id_user']
+                'id_session' => $idSession
             ];
             $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_URL, $url);
@@ -89,10 +88,11 @@
             $deleteSession = curl_exec($ch);
             curl_close($ch);
 
-            echo json_encode(["status" => "error", "message" => "Utilisateur et session supprimes apres 3 tentatives echouees"]);
+            echo json_encode(["status" => "error", "message" => "tentativeMaxAtteinte", 'orga' => $orga]);
+            $_SESSION['attempts'] = 0;
             exit;
         }
-        echo json_encode(["status" => "error", "message" => "Erreur d'authentification"]);
+        echo json_encode(["status" => "error", "message" => "Erreur d'authentification, veuillez saisir des identifiants valident sinon vous serez rediriger vers le portail, tentative " . $_SESSION['attempts'] . "/3"]);
         exit; 
     }
 ?>
