@@ -42,10 +42,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!response.ok) {
                 throw new Error("HTTP error " + response.status);
             }
-            return response;
+            return response.json();
         })
         .then(data => {
-            window.location.href = `authentication.php?orga=${orga}&email=${email}`;
+            window.location.href = `authentication.php?orga=${orga}&email=${email}&id_session=${data.id_session}`;
         })
         .catch(error => {
             console.error('Error:', error);

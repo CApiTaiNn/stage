@@ -45,12 +45,26 @@
             $stmt->bindParam(':email', $user['email']);
             $stmt->bindParam(':phone', $user['phone']);
 
-            if ($stmt->execute()) {
-                return true;
-            } else {
-                return false;
-            }
+            return $stmt->execute();             
         }
+
+        function ifExist($name, $firstname, $email){
+            $query = "SELECT * FROM Users
+                    WHERE name = :name
+                    AND firstname = :firstname
+                    AND email = :email";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':firstname', $firstname);
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            return !empty($result);
+        }
+
 
         function getIp(): string{
             if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) { // Support Cloudflare

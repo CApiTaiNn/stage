@@ -42,17 +42,26 @@
         //Envoie du mail avec les codes
         $code = sendMail($data['orga'], $data['email'], $data['name']);
 
-        
-        //Création de l'utilisateur
-        if ($userController->createUser($data)) {
-            $id_user = $userController->getUserId($data['name'], $data['firstname'], $data['email']);
-            $sessionController->createSession($id_user, $code[0], $code[1]);
+        $hashId = password_hash($code[0], PASSWORD_DEFAULT);
+        $hashCode = password_hash($code[1], PASSWORD_DEFAULT);
+
+        //Vérification de l'existence de l'utilisateur
+        //Si l'utilisateur n'existe pas, on le crée
+        if (!$userController->ifExist($data['name'], $data['firstname'], $data['email'])) {
+            $userController->createUser($data);
+        }
+
+        //On recupère l'id de l'utilisateur
+        $id_user = $userController->getUserId($data['name'], $data['firstname'], $data['email']);
+
+        //Puis on creer la session pour l'utilisateur
+        if ($idSession = $sessionController->createSession($id_user, $hashId, $hashCode)) {
+            $response->getBody()->write(json_encode(['id_session' => $idSession]));
             return $response->withStatus(201)->withHeader('Access-Control-Allow-Origin', '*');
-        } else {
+        }else {
             return $response->withStatus(400);
         }
     });
-
 
 
     $app->post('/authentification', function (Request $request, Response $response) use ($db, $sessionController) {
@@ -66,18 +75,45 @@
         $db->setDB($data['orga'], $config['username'], $config['password']);
         $sessionController->setDB($db);
 
+        $idSessionUser = $sessionController->valideAuth($data['id_session'], $data['id'], $data['code']);
         // Validation de l'authentification
-        if ($sessionController->valideAuth($data['email'], $data['id'], $data['code'])) {
-            // Réponse en cas de succès
-            $response->getBody()->write(json_encode(['status' => 'success']));
+        if ($idSessionUser) {
+            // Réponse en cas de succès, on renvoie l'id de la session et de l'utilisateur
+            $response->getBody()->write(json_encode(['status' => 'success', 'id_session' => $idSessionUser['id_session'], 'id_user' => $idSessionUser['id_user'], 'data' => $data]));
             return $response->withStatus(201); 
         } else {
             // Réponse en cas d'échec
-            $response->getBody()->write(json_encode(["status" => "error", "message" => "Identifiants invalides"]));
+            $response->getBody()->write(json_encode(['status' => 'error']));
             return $response->withStatus(400); 
         }
     });
+
+
+
     
+    //REQUESTS DELETE
+    $app->delete('/errorAuth', function (Request $request, Response $response) use ($db, $sessionController) {
+        //Récupération des données
+        $data = json_decode($request->getBody()->getContents(), true);
+
+        //Recupération de la base de données
+        $config = $db->getDatabaseConfig($data['orga']);
+
+        //Connexion à la base de données
+        $db->setDB($data['orga'], $config['username'], $config['password']);
+        $sessionController->setDB($db);
+
+        //Suppression de la session créer pour l'utilisateur
+        if ($sessionController->suppSession($data['id_session'])) {
+            // Réponse en cas de succès
+            $response->getBody()->write(json_encode(['status' => 'success', 'message' => 'Session supprimée']));
+            return $response->withStatus(200);
+        } else {
+            // Réponse en cas d'échec
+            $response->getBody()->write(json_encode(['status' => 'error', 'message' => 'Erreur lors de la suppression de la session']));
+            return $response->withStatus(400);
+        }
+    });
 
 
     //REQUESTS OPTIONS

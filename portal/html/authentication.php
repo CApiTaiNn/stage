@@ -1,6 +1,7 @@
 <?php
     $orga = $_GET['orga'] ?? " ";
     $email = $_GET['email'] ?? " ";
+    $id_session = $_GET['id_session'] ?? " ";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -27,6 +28,7 @@
 
                     <input type="text" name="orga" id="orga" value=<?=$orga?> hidden>
                     <input type="text" name="email" id="email" value=<?=$email?> hidden>
+                    <input type="text" name="id_session" id="id_session" value=<?=$id_session?> hidden>
 
                     <label for="id" data-lang-fr="Identifiant" data-lang-en="Id">Identifiant</label>
                     <input type="text" name="id" id="id" required>

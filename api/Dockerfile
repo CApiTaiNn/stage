@@ -23,7 +23,7 @@ WORKDIR /var/www
 RUN composer install
 
 # Copier le fichier de configuration Apache
-COPY apache-config.conf /etc/apache2/sites-available/000-default.conf
+#COPY apache-config.conf /etc/apache2/sites-available/000-default.conf
 
 # Exposer le port 80
 EXPOSE 80
