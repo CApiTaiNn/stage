@@ -9,8 +9,10 @@ document.getElementById("autForm").addEventListener("submit", function(event) {
     .then(response => response.json()) // Convertir la réponse en JSON
     .then(data => {
         if (data.status === "success") {
+            console.log("Connexion réussie !");
             window.location.href = data.redirect; // Rediriger si succès
         } else {
+            console.log("Erreur de connexion");
             document.getElementById("error-message").textContent = data.message;
             document.getElementById("error-message").style.display = "block";
         }

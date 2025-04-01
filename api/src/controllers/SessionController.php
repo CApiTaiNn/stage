@@ -22,8 +22,8 @@
             return $this->sessionModel->createSession($id_user, $auth_id, $auth_pass);
         }
 
-        function valideAuth($email, $auth_id, $auth_pass){
-            return $this->sessionModel->valideAuth($email, $auth_id, $auth_pass);
+        function valideAuth($id_session, $auth_id, $auth_pass){
+            return $this->sessionModel->valideAuth($id_session, $auth_id, $auth_pass);
         }
 
         function suppSession($id_session, $id_user){

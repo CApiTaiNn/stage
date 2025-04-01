@@ -45,11 +45,7 @@
             $stmt->bindParam(':email', $user['email']);
             $stmt->bindParam(':phone', $user['phone']);
 
-            if ($stmt->execute()) {
-                return true;
-            } else {
-                return false;
-            }
+            return $stmt->execute();             
         }
 
         function ifExist($name, $firstname, $email){

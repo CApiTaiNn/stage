@@ -1,5 +1,9 @@
 <?php
-    header('Content-Type: application/json');
+    //Creation de la session pour 3 tentatives
+    session_start();
+    if (!isset($_SESSION['attempts'])) {
+        $_SESSION['attempts'] = 0;
+    }
 
     // Vérifier que les champs sont bien remplis
     if (!isset($_POST['orga'], $_POST['id'], $_POST['code'], $_POST['email'])) {
@@ -12,6 +16,7 @@
     $email = trim($_POST['email']) ?? ''; // Idem
     $id = trim($_POST['id']) ?? '';
     $code =trim($_POST['code']) ?? '';
+    $idSession = $_POST['id_session'] ?? '';
 
     // URL de l'API
     $apiUrl = 'http://api/authentification';
@@ -21,7 +26,8 @@
         'orga' => $orga,
         'email' => $email,
         'id' => $id,
-        'code' => $code
+        'code' => $code,
+        'id_session' => $idSession
     ];
 
     // Initialiser cURL
@@ -46,12 +52,6 @@
 
     // Décoder la réponse JSON
     $result = json_decode($response, true);
-
-    //Creation de la session pour 3 tentatives
-    session_start();
-    if (!isset($_SESSION['attempts'])) {
-        $_SESSION['attempts'] = 0;
-    }
     
     // Vérifier si la réponse contient une erreur
     if ($result['status'] === 'success') {
@@ -89,7 +89,7 @@
             $deleteSession = curl_exec($ch);
             curl_close($ch);
 
-            echo json_encode(["status" => "error", "message" => "Utilisateur et session supprimés après 3 tentatives échouées"]);
+            echo json_encode(["status" => "error", "message" => "Utilisateur et session supprimes apres 3 tentatives echouees"]);
             exit;
         }
         echo json_encode(["status" => "error", "message" => "Erreur d'authentification"]);
