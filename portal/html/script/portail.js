@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = document.getElementById('email').value;
         const form = document.getElementById('loginForm');
         const formData = new FormData(form);
-        const apiUrl = "http://localhost:8081/login";
+        const apiUrl = "proxy.php";
 
 
         const requestOption = {
@@ -34,7 +34,8 @@ document.addEventListener('DOMContentLoaded', function() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(Object.fromEntries(formData.entries()))
+            body: JSON.stringify(Object.fromEntries(formData.entries())),
+            credentials: 'include'
         };
 
         fetch(apiUrl, requestOption)
@@ -45,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return response.json();
         })
         .then(data => {
-            window.location.href = `authentication.php?orga=${orga}&email=${email}&id_session=${data.id_session}`;
+            window.location.href = `authentication.php?orga=${orga}&email=${email}`;
         })
         .catch(error => {
             console.error('Error:', error);

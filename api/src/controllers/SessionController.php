@@ -18,8 +18,8 @@
             return $this->sessionModel->getSessions();
         }
 
-        function createSession($id_user, $auth_id, $auth_pass){
-            return $this->sessionModel->createSession($id_user, $auth_id, $auth_pass);
+        function createSession($id_session, $id_user, $auth_id, $auth_pass){
+            return $this->sessionModel->createSession($id_session, $id_user, $auth_id, $auth_pass);
         }
 
         function valideAuth($id_session, $auth_id, $auth_pass){

@@ -1,7 +1,8 @@
 <?php
+    session_start();
     $orga = $_GET['orga'] ?? " ";
     $email = $_GET['email'] ?? " ";
-    $id_session = $_GET['id_session'] ?? " ";
+    $id_session = $_COOKIE['SESSION_ID'];
 ?>
 <!DOCTYPE html>
 <html lang="fr">

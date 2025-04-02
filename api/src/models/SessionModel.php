@@ -22,17 +22,17 @@
             }
         }
 
-        function createSession($id_user, $auth_id, $auth_pass){
-            $query = "INSERT INTO Sessions (id_user, auth_id, auth_pass) VALUES (:id_user, :auth_id, :auth_pass)";
+        function createSession($id_session, $id_user, $auth_id, $auth_pass){
+            $query = "INSERT INTO Sessions (id_session, id_user, auth_id, auth_pass) VALUES (:id_session, :id_user, :auth_id, :auth_pass)";
 
             $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id_session', $id_session);
             $stmt->bindParam(':id_user', $id_user, PDO::PARAM_INT);
             $stmt->bindParam(':auth_id', $auth_id);
             $stmt->bindParam(':auth_pass', $auth_pass);
-            $stmt->execute();
-           
-            //Récupération de l'id de la session
-            return $this->conn->lastInsertId();
+            
+            //Retourne si la requête a été exécutée avec succès
+            return $stmt->execute();
         }
 
         function valideAuth($id_session, $auth_id, $auth_pass) {
