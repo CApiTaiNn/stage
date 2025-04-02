@@ -71,14 +71,13 @@
                 setcookie("SESSION_ID", $idSession, [
                     'expires' => time() + 3600,
                     'path' => '/',
-                    'domain' => $_SERVER['HTTP_HOST'],
-                    #'secure' => true,
+                    'secure' => false,
                     'httponly' => true,
-                    'samesite' => 'Strict'
+                    'samesite' => 'Lax'
                 ]);
 
                 $response->getBody()->write(json_encode(['status' => 'success']));
-                return $response->withStatus(201)->withHeader('Access-Control-Allow-Origin', '*');
+                return $response->withStatus(201);//->withHeader('Access-Control-Allow-Origin', '*');
             }else {
                 return $response->getBody()->write(json_encode(['status' => 'error']))->withStatus(400);
             }

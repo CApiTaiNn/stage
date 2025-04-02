@@ -43,7 +43,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!response.ok) {
                 throw new Error("HTTP error " + response.status);
             }
-            return response.json();
+            console.log("Response status:", response.status);
+            return response;
         })
         .then(data => {
             window.location.href = `authentication.php?orga=${orga}&email=${email}`;
