@@ -89,9 +89,7 @@
 
     $app->post('/authentification', function (Request $request, Response $response) use ($db, $sessionController) {
         //Vérifie api key
-        if (!checkApiKey($request)) {
-            return $response->getBody()->write(json_encode(['error' => 'Api Key error']))->withStatus(401);
-        }else{
+        if (checkApiKey($request)) {
             //Récupération des données
             $data = json_decode($request->getBody()->getContents(), true);
 
@@ -106,13 +104,16 @@
             // Validation de l'authentification
             if ($idSessionUser) {
                 // Réponse en cas de succès, on renvoie l'id de la session et de l'utilisateur
-                $response->getBody()->write(json_encode(['status' => 'success', 'id_session' => $idSessionUser['id_session'], 'id_user' => $idSessionUser['id_user'], 'data' => $data]));
+                $response->getBody()->write(json_encode(['status' => 'success','id_user' => $idSessionUser['id_user'], 'data' => $data]));
                 return $response->withStatus(201); 
             } else {
                 // Réponse en cas d'échec
                 $response->getBody()->write(json_encode(['status' => 'error']));
-                return $response->withStatus(400); 
+                return $response->withStatus(401); 
             }
+        }else{
+            $response->getBody()->write(json_encode(['status' => 'error', 'error' => 'Api Key error']));
+            return $response->withStatus(401);
         }
     });
 
@@ -122,9 +123,7 @@
     //REQUESTS DELETE
     $app->delete('/errorAuth', function (Request $request, Response $response) use ($db, $sessionController) {
         //Vérifie api key
-        if (!checkApiKey($request)) {
-            return $response->getBody()->write(json_encode(['error' => 'Api Key error']))->withStatus(401);
-        }else{
+        if (checkApiKey($request)) {
             //Récupération des données
             $data = json_decode($request->getBody()->getContents(), true);
 
@@ -145,6 +144,8 @@
                 $response->getBody()->write(json_encode(['status' => 'error', 'message' => 'Erreur lors de la suppression de la session']));
                 return $response->withStatus(400);
             }
+        }else{
+            return $response->getBody()->write(json_encode(['error' => 'Api Key error']))->withStatus(401);
         }
     });
 

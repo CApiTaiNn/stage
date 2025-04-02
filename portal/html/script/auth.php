@@ -20,6 +20,7 @@
 
     // URL de l'API
     $apiUrl = 'http://api/authentification';
+    $apiKey = getenv('API_KEY');
 
     // Créer les données à envoyer
     $data = [
@@ -36,7 +37,10 @@
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Content-Type: application/json',
+        "X-API-KEY: $apiKey"
+    ]);
 
     // Exécuter la requête
     $response = curl_exec($ch);
