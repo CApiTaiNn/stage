@@ -13,10 +13,10 @@
     use Slim\Factory\AppFactory;
     use Psr\Http\Message\ResponseInterface as Response;
     use Psr\Http\Message\ServerRequestInterface as Request;
-    use Firebase\JWT\JWT;
-    use Firebase\JWT\Key;
 
     $app = AppFactory::create();
+
+    $app->post('/login', [])
 
 
     //Création de DB sans configuration
