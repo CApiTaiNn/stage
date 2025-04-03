@@ -66,10 +66,11 @@
         }
 
         function suppSession($idSession){
+            $idSessionDecode = urldecode($idSession);
             $query = "DELETE FROM Sessions
                     WHERE id_session = :idSession";
             $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(':idSession', $idSession, PDO::PARAM_INT);
+            $stmt->bindParam(':idSession', $idSessionDecode, PDO::PARAM_STR);
             return $stmt->execute();
         }
     }

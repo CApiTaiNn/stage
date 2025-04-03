@@ -88,12 +88,15 @@
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/json',
+                "X-API-KEY: $apiKey"
+            ]);
             $deleteSession = curl_exec($ch);
             curl_close($ch);
 
-            echo json_encode(["status" => "error", "message" => "tentativeMaxAtteinte", 'orga' => $orga]);
             $_SESSION['attempts'] = 0;
+            echo json_encode(["status" => "error", "message" => "tentativeMaxAtteinte", 'orga' => $orga]);
             exit;
         }
         echo json_encode(["status" => "error", "message" => "Erreur d'authentification, veuillez saisir des identifiants valident sinon vous serez rediriger vers le portail, tentative " . $_SESSION['attempts'] . "/3"]);

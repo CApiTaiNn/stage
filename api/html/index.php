@@ -104,7 +104,7 @@
             // Validation de l'authentification
             if ($idSessionUser) {
                 // Réponse en cas de succès, on renvoie l'id de la session et de l'utilisateur
-                $response->getBody()->write(json_encode(['status' => 'success','id_user' => $idSessionUser['id_user'], 'data' => $data]));
+                $response->getBody()->write(json_encode(['status' => 'success','id_user' => $idSessionUser['id_user']]));
                 return $response->withStatus(201); 
             } else {
                 // Réponse en cas d'échec
@@ -137,7 +137,7 @@
             //Suppression de la session créer pour l'utilisateur
             if ($sessionController->suppSession($data['id_session'])) {
                 // Réponse en cas de succès
-                $response->getBody()->write(json_encode(['status' => 'success', 'message' => 'Session supprimée']));
+                $response->getBody()->write(json_encode(['status' => 'success', 'message' => 'Session supprimee']));
                 return $response->withStatus(200);
             } else {
                 // Réponse en cas d'échec
@@ -145,7 +145,7 @@
                 return $response->withStatus(400);
             }
         }else{
-            return $response->getBody()->write(json_encode(['error' => 'Api Key error']))->withStatus(401);
+            return $response->getBody()->write(json_encode(['status' => 'error', 'message' => 'Api Key error']))->withStatus(401);
         }
     });
 
