@@ -1,4 +1,8 @@
 <?php
+    /**
+     * Model d'un utilisateur
+    */
+
     class UserModel{
         private $conn;
         private $id_user;
@@ -24,7 +28,12 @@
         }
 
         function getUserId($name, $firstname, $email){
-            $query = "SELECT id_user FROM Users WHERE name = :name AND firstname = :firstname AND email = :email";
+            $query = "SELECT id_user
+                    FROM Users 
+                    WHERE name = :name 
+                    AND firstname = :firstname 
+                    AND email = :email";
+                    
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':firstname', $firstname);
@@ -36,10 +45,10 @@
         }
 
         function createUser($user){
-            $query = "INSERT INTO Users (name, firstname, email, phone) VALUES (:name, :firstname, :email, :phone)";
+            $query = "INSERT INTO Users (name, firstname, email, phone) 
+                    VALUES (:name, :firstname, :email, :phone)";
 
             $stmt = $this->conn->prepare($query);
-
             $stmt->bindParam(':name', $user['name']);
             $stmt->bindParam(':firstname', $user['firstname']);
             $stmt->bindParam(':email', $user['email']);
@@ -67,7 +76,7 @@
 
 
         function getIp(): string{
-            if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) { // Support Cloudflare
+            if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
                 $ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
             } elseif (isset($_SERVER['REMOTE_ADDR']) === true) {
                 $ip = $_SERVER['REMOTE_ADDR'];

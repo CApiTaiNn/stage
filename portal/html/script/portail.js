@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    /**
+     * Fonction de traduction de la page
+     * 2 langues disponibles : fr et en
+     * La langue par défaut est le français
+     */
     const langElements = document.querySelectorAll('[data-lang]');
     langElements.forEach(element => {
         element.addEventListener('click', function() {
@@ -18,6 +24,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
+    /**
+     * Envoie des données du formulaire de connexion au proxy
+     * Récupère la reponse API
+     * Si valide, redirige vers la page d'authentification
+    */
     const submitButton = document.getElementById('submit');
     submitButton.addEventListener('click', function(event) {
         event.preventDefault();
@@ -43,7 +54,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!response.ok) {
                 throw new Error("HTTP error " + response.status);
             }
-            console.log("Response status:", response.status);
             return response;
         })
         .then(data => {
@@ -53,7 +63,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error:', error);
         });
     });
-
 });
 
 

@@ -1,4 +1,10 @@
 <?php
+
+    /**
+     * Script intermediaire entre le portail et l'API
+     * Rajouter la cle API dans la requete
+    */
+
     //Coonfiguration de l'API
     $apiKey = getenv('API_KEY');
     $apiUrl = "http://api/login";

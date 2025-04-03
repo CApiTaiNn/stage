@@ -1,4 +1,12 @@
 <?php
+
+    /**
+     * Script d'authentification des codes recu par mail
+     * Envoie des codes à l'api
+     * Gere les 3 tentatives d'authentification
+     * 
+    */
+    
     //Creation de la session pour 3 tentatives
     session_start();
     if (!isset($_SESSION['attempts'])) {
@@ -11,18 +19,23 @@
         exit;
     }
 
-    // Récupérer les données du formulaire
-    $orga = trim($_POST['orga']) ?? ''; // Remplace par les valeurs appropriées
-    $email = trim($_POST['email']) ?? ''; // Idem
+    /**
+     * Initialisation de la requete cURL
+     * 
+     * Variable a envoyer
+     * Url et Key API
+     * Configuration de la requete
+     * 
+     * Envoi de la requete
+    */
+
+    $orga = trim($_POST['orga']) ?? ''; 
+    $email = trim($_POST['email']) ?? ''; 
     $id = trim($_POST['id']) ?? '';
     $code =trim($_POST['code']) ?? '';
     $idSession = $_POST['id_session'] ?? '';
-
-    // URL de l'API
     $apiUrl = 'http://api/authentification';
     $apiKey = getenv('API_KEY');
-
-    // Créer les données à envoyer
     $data = [
         'orga' => $orga,
         'email' => $email,
@@ -31,7 +44,6 @@
         'id_session' => $idSession
     ];
 
-    // Initialiser cURL
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $apiUrl);
     curl_setopt($ch, CURLOPT_POST, true);
@@ -42,30 +54,29 @@
         "X-API-KEY: $apiKey"
     ]);
 
-    // Exécuter la requête
     $response = curl_exec($ch);
-
     // Vérifier si une erreur s'est produite
     if (curl_errno($ch)) {
         echo 'Erreur cURL: ' . curl_error($ch);
         exit;
     }
-
-    // Fermer la session cURL
     curl_close($ch);
-
-    // Décoder la réponse JSON
     $result = json_decode($response, true);
     
-    // Vérifier si la réponse contient une erreur
+    /**
+     * Vérification de la réponse de l'API
+     * 
+     * Si success, on ajoute l'IP de l'utilisateur dans la liste blanche
+     * Si error, on incrémente le nombre de tentatives
+     * Si 3 tentatives échouées, on supprime la session de l'utilisateur
+     *  
+    */ 
+
     if ($result['status'] === 'success') {
         $ip = $_SERVER['REMOTE_ADDR'];
-
-        // Vérifier si l'IP est valide
         if (filter_var($ip, FILTER_VALIDATE_IP)) {
             $command = "sudo /sbin/iptables -A INPUT -s $ip -j ACCEPT";
             //shell_exec($command);
-            
             echo json_encode(["status" => "success", "redirect" => "https://www.google.fr"]);
             exit;
         } else {
@@ -73,11 +84,12 @@
             exit;
         }
     }else{
-        // En cas d'erreur d'authentification, suppression de la session
         $_SESSION['attempts']++;
-
         if ($_SESSION['attempts'] >= 3) {
-            // Si 3 tentatives échouées, on supprime la session
+
+            /**
+             * Configuration de la requete de suppression de la session
+             */
             $url = 'http://api/errorAuth';
             $data = [
                 'orga' => $orga,

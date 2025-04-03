@@ -1,4 +1,9 @@
 <?php
+
+    /**
+     * Model d'une session
+     */
+
     class SessionModel{
         private $conn;
         private $id_session;
@@ -23,7 +28,8 @@
         }
 
         function createSession($id_session, $id_user, $auth_id, $auth_pass){
-            $query = "INSERT INTO Sessions (id_session, id_user, auth_id, auth_pass) VALUES (:id_session, :id_user, :auth_id, :auth_pass)";
+            $query = "INSERT INTO Sessions (id_session, id_user, auth_id, auth_pass) 
+                    VALUES (:id_session, :id_user, :auth_id, :auth_pass)";
 
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':id_session', $id_session);
@@ -31,7 +37,6 @@
             $stmt->bindParam(':auth_id', $auth_id);
             $stmt->bindParam(':auth_pass', $auth_pass);
             
-            //Retourne si la requête a été exécutée avec succès
             return $stmt->execute();
         }
 
@@ -43,9 +48,8 @@
             $stmt->bindParam(':id_session', $id_session, PDO::PARAM_INT);
             $stmt->execute();
 
-            // Debugging: Vérifie si des résultats sont retournés
+            //Vérifie si des résultats sont retournés
             if ($stmt->rowCount() == 0) {
-                // Si aucune ligne n'est trouvée
                 error_log("Aucune session trouvée pour l'id_session: $id_session");
                 return false;
             }
@@ -59,16 +63,17 @@
                     'id_user' => $result['id_user']
                 ];
             } else {
-                // Debugging: Message d'erreur pour vérifier si les hashs ne correspondent pas
                 error_log("Erreur de vérification des hashs pour auth_id ou auth_pass");
                 return false;
             }
         }
 
         function suppSession($idSession){
+            // L'id de session est encoder dans l'url, il faut le décoder pour correspondre au hash
             $idSessionDecode = urldecode($idSession);
             $query = "DELETE FROM Sessions
                     WHERE id_session = :idSession";
+
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':idSession', $idSessionDecode, PDO::PARAM_STR);
             return $stmt->execute();
