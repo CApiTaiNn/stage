@@ -1,6 +1,6 @@
 <?php
 
-    require __DIR__ . '/../models/UserModel.php';
+    require __DIR__ . '/../Models/UserModel.php';
 
     class UserController{
         private $userModel;

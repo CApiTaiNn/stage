@@ -3,18 +3,16 @@
     header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
 
     require __DIR__ . '/../vendor/autoload.php';
-    require __DIR__ . '/../src/controllers/UserController.php';
-    require __DIR__ . '/../src/controllers/SessionController.php';
-    require __DIR__ . '/../src/config/Database.php';
-    require __DIR__ . '/../src/utils/sendMail.php';
-    require __DIR__ . '/../src/utils/generator.php';
-    require __DIR__ . '/../src/utils/checkApiKey.php';
+    require __DIR__ . '/../src/Controllers/UserController.php';
+    require __DIR__ . '/../src/Controllers/SessionController.php';
+    require __DIR__ . '/../src/Config/Database.php';
+    require __DIR__ . '/../src/Utils/sendMail.php';
+    require __DIR__ . '/../src/Utils/generator.php';
+    require __DIR__ . '/../src/Utils/checkApiKey.php';
 
     use Slim\Factory\AppFactory;
     use Psr\Http\Message\ResponseInterface as Response;
     use Psr\Http\Message\ServerRequestInterface as Request;
-    use Firebase\JWT\JWT;
-    use Firebase\JWT\Key;
 
     $app = AppFactory::create();
 

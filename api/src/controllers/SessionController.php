@@ -1,5 +1,5 @@
 <?php
-    require __DIR__ . '/../models/SessionModel.php';
+    require __DIR__ . '/../Models/SessionModel.php';
 
     class SessionController{
         private $sessionModel;
