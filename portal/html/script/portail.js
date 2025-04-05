@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return response;
         })
         .then(data => {
-            window.location.href = `authentication.php?orga=${orga}&email=${email}`;
+            window.location.href = `authentication.php?orga=${orga}`;
         })
         .catch(error => {
             console.error('Error:', error);
