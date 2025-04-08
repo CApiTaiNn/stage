@@ -1,7 +1,9 @@
 <?php
 
     return [
-        'AllBoss' => 'http://api:8081/allboss'
+        'AllBoss' => 'http://api/allboss',
+        'AllSession' => 'http://api/allsession',
+        'BossLogin' => 'http://api/loginboss',
     ];
 
 ?>
