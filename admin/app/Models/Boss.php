@@ -11,7 +11,7 @@ class Boss extends Model{
     private $email;
     private $company;
 
-    public function __construct(){
+    function __construct(){
         $this->name = "";
         $this->password = "";
         $this->email = "";

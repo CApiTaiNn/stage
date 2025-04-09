@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BossController;
+use App\Http\Controllers\UserController;
 
 /**
 *    Route::get('/', function () {
@@ -18,9 +19,7 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
+Route::get('/home', [UserController::class, 'getAllUsers'])->name('home');
 
 
 /**

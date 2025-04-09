@@ -1,48 +1,55 @@
 <?php
 
-namespace App\Models;
+    namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+    use Illuminate\Support\Facades\Http;
 
-class User extends Authenticatable
-{
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    class User{
+        private $id_user;
+        private $name;
+        private $firstname;
+        private $email;
+        private $phone;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+        function setId($val) {
+            $this->id_user = $val;
+        }
+        function setName($val) {
+            $this->name = $val;
+        }
+        function setFirstname($val) {
+            $this->firstname = $val;
+        }
+        function setEmail($val) {
+            $this->email = $val;
+        }
+        function setPhone($val) {
+            $this->phone = $val;
+        }
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        function getId() {
+            return $this->id_user;
+        }
+        function getName() {
+            return $this->name;
+        }
+        function getFirstname() {
+            return $this->firstname;
+        }
+        function getEmail() {
+            return $this->email;
+        }
+        function getPhone() {
+            return $this->phone;
+        }
+        
+        
+
+        function getAllUsers() {
+            return Http::withHeaders([
+                "X-API-KEY" => getenv('API_KEY'),
+                "ORGANIZATION" => session('name'),
+            ])->get(config('url.AllUser'));
+        }
     }
-}

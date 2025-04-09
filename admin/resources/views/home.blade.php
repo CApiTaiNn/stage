@@ -46,23 +46,23 @@
                 </button>
             </div>
         </div>
-        <article>
-            <table>
+        <article class="flex justify-center mt-10">
+            <table class="table-fixed border-collapse border border-gray-400">
                 <thead>
                     <tr>
-                        <th class="px-4 py-2">Nom</th>
-                        <th class="px-4 py-2">Prénom</th>
-                        <th class="px-4 py-2">Email</th>
-                        <th class="px-4 py-2">Téléphone</th>
+                        <th class="px-4 py-2 border border-gray-300">Nom</th>
+                        <th class="px-4 py-2 border border-gray-300">Prénom</th>
+                        <th class="px-4 py-2 border border-gray-300">Email</th>
+                        <th class="px-4 py-2 border border-gray-300">Téléphone</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
                         <tr>
-                            <td class="px-4 py-2">{{ $user->name }}</td>
-                            <td class="px-4 py-2">{{ $user->first_name }}</td>
-                            <td class="px-4 py-2">{{ $user->email }}</td>
-                            <td class="px-4 py-2">{{ $user->phone }}</td>
+                            <td class="px-4 py-2 border border-gray-300">{{ $user->getName() }}</td>
+                            <td class="px-4 py-2 border border-gray-300">{{ $user->getFirstname() }}</td>
+                            <td class="px-4 py-2 border border-gray-300">{{ $user->getEmail() }}</td>
+                            <td class="px-4 py-2 border border-gray-300">{{ $user->getName() }}</td>
                         </tr>
                     @endforeach
                 </tbody>

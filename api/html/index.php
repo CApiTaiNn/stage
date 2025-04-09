@@ -33,6 +33,22 @@
         return $response;
     });
 
+    $app->get('/users', function (Request $request, Response $response) use ($db, $userController) {
+        //Configuration de la base de données
+        $orga = $request->getHeaderLine('ORGANIZATION');
+        $db->setDB($orga, getenv('USERNAMEBOSS'), getenv('PASSWORDBOSS'));
+        $userController->setDB($db);
+
+        //Récupération de tous les utilisateurs
+        if($userTab = $userController->getAllUsers()){
+            $response->getBody()->write(json_encode(['status' => 'success', 'data' => $userTab]));
+            return $response->withStatus(200);
+        }else{
+            $response->getBody()->write(json_encode(['status' => 'error', 'data' => $userTab]));
+            return $response->withStatus(400);
+        }
+    });
+
 
     //REQUESTS POST
     $app->post('/login', function (Request $request, Response $response) use ($db, $userController, $sessionController) {
@@ -76,7 +92,7 @@
             ]);
 
             $response->getBody()->write(json_encode(['status' => 'success']));
-            return $response->withStatus(201);//->withHeader('Access-Control-Allow-Origin', '*');
+            return $response->withStatus(201);
         }else {
             return $response->getBody()->write(json_encode(['status' => 'error']))->withStatus(400);
         }
