@@ -43,7 +43,7 @@ class UserController extends Controller{
                 $u->setPhone($user['phone']);
                 $users[] = $u;
             }
-            return view('home', ['users' => $users]);
+            return view('listUser', ['users' => $users]);
         }else{
             return false;
         }
