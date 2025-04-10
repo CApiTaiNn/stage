@@ -1,3 +1,5 @@
+
+
 body {
     display: flex;
     justify-content: center;
@@ -6,6 +8,8 @@ body {
     height: 100vh;
     margin: 0;
     font-family: Arial, sans-serif; 
+    background-image: url('../assets/images/fond.jpg');
+    
 }
 
 ul {
@@ -35,14 +39,14 @@ article img{
 }
 
 h3{
-    font-size: xx-large;
+    font-size: x-large;
 }
 
 main {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 30%;
 }
 
 section {
@@ -81,6 +85,7 @@ form p{
 .cgu{
     flex-direction: row;
     margin: 10px;
+    font-size: small;
 }
 
 form input, form button {
@@ -101,13 +106,42 @@ form button:hover {
 }
 
 
-@media screen and (max-width: 400px) {
+article > div {
+    display: flex;
+    flex-direction: row;
+}
+
+div > img {
+    max-width: 20%;
+    height: 20%;
+    margin-left: auto;
+}
+
+@media screen and (max-width: 1330px) {
+    div > img {
+        max-width: 20%;
+        height: 10%;
+        margin-top: auto;
+    }
+}
+
+@media screen and (max-width: 900px) {
     body {
         flex-direction: column;
     }
 
+    div > img {
+        max-width: 20%;
+        height: 10%;
+        margin-top: auto;
+    }
+
     h3{
-        font-size: x-large;
+        font-size: x-small;
+    }
+
+    .cgu{
+        font-size: x-small;
     }
 }
 
