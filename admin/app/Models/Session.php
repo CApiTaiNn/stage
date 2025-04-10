@@ -1,32 +1,37 @@
 <?php
 
-namespace App\Models;
+    namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Support\Facades\Http;
 
-class Session extends Model{
-    private $sessionId;
-    private $userId;
-    private $date;
-    private $auth_id;
-    private $auth_pass;
+    class Session extends Model{
+        private $sessionId;
+        private $userId;
+        private $date;
+        private $auth_id;
+        private $auth_pass;
 
-    function __construct($sessionId, $userId, $date, $auth_id, $auth_pass){
-        $this->sessionId = $sessionId;
-        $this->userId = $userId;
-        $this->date = $date;
-        $this->auth_id = $auth_id;
-        $this->auth_pass = $auth_pass;
+
+        public function getCurrentSession(){
+            return Http::withHeaders([
+                "X-API-KEY" => getenv('API_KEY'),
+                "ORGANIZATION" => session('name')
+            ])->get(config('url.CurrentSession'));
+        }
+
+        public function getDaySession(){
+            return Http::withHeaders([
+                "X-API-KEY" => getenv('API_KEY'),
+                "ORGANIZATION" => session('name')
+            ])->get(config('url.DaySession'));
+        }
+
+        public function get10LastSession(){
+            return Http::withHeaders([
+                "X-API-KEY" => getenv('API_KEY'),
+                "ORGANIZATION" => session('name')
+            ])->get(config('url.10LastSession'));
+        }
     }
-
-    function getAllSession(){
-        return Http::get(config('url.AllSession'), [
-            'sessionId' => $this->sessionId,
-            'userId' => $this->userId,
-            'date' => $this->date,
-            'auth_id' => $this->auth_id,
-            'auth_pass' => $this->auth_pass
-        ]);
-    }
-
-}
+?>
