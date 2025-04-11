@@ -33,6 +33,70 @@
         return $response;
     });
 
+    $app->get('/users', function (Request $request, Response $response) use ($db, $userController) {
+        //Configuration de la base de données
+        $orga = $request->getHeaderLine('ORGANIZATION');
+        $db->setDB($orga, getenv('USERNAMEBOSS'), getenv('PASSWORDBOSS'));
+        $userController->setDB($db);
+
+        //Récupération de tous les utilisateurs
+        if($userTab = $userController->getAllUsers()){
+            $response->getBody()->write(json_encode(['status' => 'success', 'data' => $userTab]));
+            return $response->withStatus(200);
+        }else{
+            $response->getBody()->write(json_encode(['status' => 'error', 'data' => $userTab]));
+            return $response->withStatus(400);
+        }
+    });
+
+    $app->get('/currentsession', function (Request $request, Response $response) use ($db, $sessionController) {
+        //Configuration de la base de données
+        $orga = $request->getHeaderLine('ORGANIZATION');
+        $db->setDB($orga, getenv('USERNAMEBOSS'), getenv('PASSWORDBOSS'));
+        $sessionController->setDB($db);
+
+        //Récupération de la session courante
+        if($currentSession = $sessionController->getCurrentSession()){
+            $response->getBody()->write(json_encode(['status' => 'success', 'data' => $currentSession]));
+            return $response->withStatus(200);
+        }else{
+            $response->getBody()->write(json_encode(['status' => 'error']));
+            return $response->withStatus(400);
+        }
+    });
+
+    $app->get('/daysession', function (Request $request, Response $response) use ($db, $sessionController) {
+        //Configuration de la base de données
+        $orga = $request->getHeaderLine('ORGANIZATION');
+        $db->setDB($orga, getenv('USERNAMEBOSS'), getenv('PASSWORDBOSS'));
+        $sessionController->setDB($db);
+
+        //Récupération de la session courante
+        if($daySession = $sessionController->getDaySession()){
+            $response->getBody()->write(json_encode(['status' => 'success', 'data' => $daySession]));
+            return $response->withStatus(200);
+        }else{
+            $response->getBody()->write(json_encode(['status' => 'error']));
+            return $response->withStatus(400);
+        }
+    });
+
+    $app->get('/10lastsession', function (Request $request, Response $response) use ($db, $sessionController) {
+        //Configuration de la base de données
+        $orga = $request->getHeaderLine('ORGANIZATION');
+        $db->setDB($orga, getenv('USERNAMEBOSS'), getenv('PASSWORDBOSS'));
+        $sessionController->setDB($db);
+
+        //Récupération de la session courante
+        if($lastSession = $sessionController->get10LastSession()){
+            $response->getBody()->write(json_encode(['status' => 'success', 'data' => $lastSession]));
+            return $response->withStatus(200);
+        }else{
+            $response->getBody()->write(json_encode(['status' => 'error']));
+            return $response->withStatus(400);
+        }
+    });
+
 
     //REQUESTS POST
     $app->post('/login', function (Request $request, Response $response) use ($db, $userController, $sessionController) {
@@ -76,7 +140,7 @@
             ]);
 
             $response->getBody()->write(json_encode(['status' => 'success']));
-            return $response->withStatus(201);//->withHeader('Access-Control-Allow-Origin', '*');
+            return $response->withStatus(201);
         }else {
             return $response->getBody()->write(json_encode(['status' => 'error']))->withStatus(400);
         }

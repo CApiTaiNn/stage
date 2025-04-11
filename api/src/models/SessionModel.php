@@ -78,5 +78,41 @@
             $stmt->bindParam(':idSession', $idSessionDecode, PDO::PARAM_STR);
             return $stmt->execute();
         }
+
+        /*
+        * Récupère les sessions courantes
+        * Si le datetime actuel - le datetime de la session est inférieur à 1h, on considère que la session est courante
+        */
+        function getCurrentSession(){
+            $query = "SELECT count(id_session) as currentSession FROM Sessions
+                    WHERE TIMEDIFF(CURTIME(), date) < '01:00:00'";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
+        /*
+        * Récupère les utilisateurs qui se sont connecté aujourd'hui
+        */
+        function getDaySession(){
+            $query = "SELECT count(id_session) as daySession FROM Sessions
+                    WHERE DATE(date) = CURDATE()";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
+        /*
+        * Récupère les 10 derniers utilisateurs qui se sont connecté
+        */
+        function get10LastSession(){
+            $query = "SELECT u.name, u.firstname, TIME(s.date) AS time 
+                    FROM Sessions as s
+                    INNER JOIN Users as u
+                    ON s.id_user = u.id_user";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
     }
 ?>

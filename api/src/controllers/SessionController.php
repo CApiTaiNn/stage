@@ -29,4 +29,16 @@
         function suppSession($id_session){
             return $this->sessionModel->suppSession($id_session);
         }
+
+        function getCurrentSession(){
+            return $this->sessionModel->getCurrentSession();
+        }
+
+        function getDaySession(){
+            return $this->sessionModel->getDaySession();
+        }
+
+        function get10LastSession(){
+            return $this->sessionModel->get10LastSession();
+        }
     }

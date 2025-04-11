@@ -28,7 +28,6 @@
                 <form id="autForm" action="script/auth.php" method="post">
 
                     <input type="text" name="orga" id="orga" value=<?=$orga?> hidden>
-                    <input type="text" name="email" id="email" value=<?=$email?> hidden>
                     <input type="text" name="id_session" id="id_session" value=<?=$id_session?> hidden>
 
                     <label for="id" data-lang-fr="Identifiant" data-lang-en="Id">Identifiant</label>

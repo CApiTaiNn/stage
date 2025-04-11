@@ -2,12 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BossController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\HomeController;
 
-/**
-*    Route::get('/', function () {
-*        return view('welcome');
-*    });
-*/
 
 
 /**
@@ -18,9 +15,9 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::get('/listUser', [UserController::class, 'getAllUsers'])->name('listUser');
 
 
 /**

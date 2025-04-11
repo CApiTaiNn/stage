@@ -15,7 +15,7 @@
             $this->conn = $con;
         }
 
-        function getUsers() {
+        function getAllUsers() {
             $query = "SELECT * FROM Users";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
