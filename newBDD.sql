@@ -16,3 +16,5 @@ CREATE TABLE Sessions(
 
     FOREIGN KEY (id_user) REFERENCES Users(id_user)
 )
+
+CREATE TABLE 
