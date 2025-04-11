@@ -11,3 +11,10 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+
+.bg-login {
+    background-image: url('../../public/pictures/fond.jpg');
+    background-size: cover;
+    background-position: center;
+}
