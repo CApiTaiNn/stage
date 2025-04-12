@@ -28,10 +28,21 @@ class UserController extends Controller{
     public function setPhone($val){
         $this->userModel->setPhone($val);
     }
+    public function setNbCo($val){
+        $this->userModel->setNbCo($val);
+    }
+    public function setLastCo($val){
+        $this->userModel->setLastCo($val);
+    }
+    public function setStatus($val){
+        $this->userModel->setStatus($val);
+    }
+
     
     public function getAllUsers(){
         $response = $this->userModel->getAllUsers();
         $users = [];
+        dd($response->json());
 
         if($response['status'] === 'success'){
             foreach($response['data'] as $user){
@@ -41,6 +52,9 @@ class UserController extends Controller{
                 $u->setFirstname($user['firstname']);
                 $u->setEmail($user['email']);
                 $u->setPhone($user['phone']);
+                $u->setNbCo($user['nbCo']);
+                $u->setLastCo($user['lastCo']);
+                $u->setStatus($user['status']);
                 $users[] = $u;
             }
             return view('listUser', ['users' => $users]);

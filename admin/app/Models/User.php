@@ -10,6 +10,9 @@
         private $firstname;
         private $email;
         private $phone;
+        private $nbCo;
+        private $lastCo;
+        private $status;
 
         function setId($val) {
             $this->id_user = $val;
@@ -26,8 +29,27 @@
         function setPhone($val) {
             $this->phone = $val;
         }
+        function setNbCo($val) {
+            $this->nbCo = $val;
+        }
+        function setLastCo($val) {
+            $this->lastCo = $val;
+        }
+        function setStatus($val) {
+            $this->status = $val;
+        }
 
 
+        
+        function getNbCo() {
+            return $this->nbCo;
+        }
+        function getLastCo() {
+            return $this->lastCo;
+        }
+        function getStatus() {
+            return $this->status;
+        }
         function getId() {
             return $this->id_user;
         }
