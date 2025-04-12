@@ -43,6 +43,11 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if (empty($lastSession))
+                            <tr>
+                                <td colspan="3" class="text-center py-4">Aucun utilisateur connecté</td>
+                            </tr>
+                        @endif
                         @foreach ($lastSession as $session)
                             <tr class="border-b hover:bg-gray-100">
                                 <td class="px-4 py-2">{{ $session['name'] }}</td>

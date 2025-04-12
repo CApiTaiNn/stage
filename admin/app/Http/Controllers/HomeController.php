@@ -19,6 +19,9 @@
             $currentSession = $this->sessionController->getCurrentSession();
             $daySession = $this->sessionController->getDaySession();
             $lastSession = $this->sessionController->get10LastSession();
+            if (!$lastSession) {
+                $lastSession = []; 
+            }
             return view('home', compact('currentSession', 'daySession', 'lastSession'));
         }
     }
