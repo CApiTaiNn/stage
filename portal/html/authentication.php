@@ -1,7 +1,6 @@
 <?php
-    session_start();
+    //session_start();
     $orga = $_GET['orga'] ?? " ";
-    $email = $_GET['email'] ?? " ";
     $id_session = $_COOKIE['SESSION_ID'];
 ?>
 <!DOCTYPE html>
@@ -15,14 +14,14 @@
 <body>
     <header>
         <ul>
-            <li><img src="langue/francais.png" alt="Français" data-lang="fr"></li>
-            <li><img src="langue/anglais.png" alt="Anglais" data-lang="en"></li>
+            <li><img src="assets/langue/francais.png" alt="Français" data-lang="fr"></li>
+            <li><img src="assets/langue/anglais.png" alt="Anglais" data-lang="en"></li>
         </ul>
     </header>
     <main>
         <section>
             <article id="form">
-                <img src="logo/<?=$orga?>.png" alt="logo organisation">
+                <img src="assets/logo/<?=$orga?>.png" alt="logo organisation">
                 <h3 data-lang-fr="Formulaire d'authentification" data-lang-en="Authentification Form">Formulaire de connexion</h3>
 
                 <form id="autForm" action="script/auth.php" method="post">

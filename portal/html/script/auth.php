@@ -14,7 +14,7 @@
     }
 
     // Vérifier que les champs sont bien remplis
-    if (!isset($_POST['orga'], $_POST['id'], $_POST['code'], $_POST['email'])) {
+    if (!isset($_POST['orga'], $_POST['id'], $_POST['code'], $_POST['id_session'])) {
         echo json_encode(["status" => "error", "message" => "Données manquantes"]);
         exit;
     }
@@ -30,7 +30,6 @@
     */
 
     $orga = trim($_POST['orga']) ?? ''; 
-    $email = trim($_POST['email']) ?? ''; 
     $id = trim($_POST['id']) ?? '';
     $code =trim($_POST['code']) ?? '';
     $idSession = $_POST['id_session'] ?? '';
@@ -38,7 +37,6 @@
     $apiKey = getenv('API_KEY');
     $data = [
         'orga' => $orga,
-        'email' => $email,
         'id' => $id,
         'code' => $code,
         'id_session' => $idSession

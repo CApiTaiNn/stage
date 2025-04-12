@@ -32,7 +32,7 @@
                     VALUES (:id_session, :id_user, :auth_id, :auth_pass)";
 
             $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(':id_session', $id_session);
+            $stmt->bindParam(':id_session', $id_session, PDO::PARAM_INT);
             $stmt->bindParam(':id_user', $id_user, PDO::PARAM_INT);
             $stmt->bindParam(':auth_id', $auth_id);
             $stmt->bindParam(':auth_pass', $auth_pass);
@@ -41,41 +41,35 @@
         }
 
         function valideAuth($id_session, $auth_id, $auth_pass) {
+            $id_session = trim($id_session);
             $query = "SELECT s.id_session, s.id_user, s.auth_id, s.auth_pass 
                       FROM Sessions as s
                       WHERE s.id_session = :id_session";
             $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(':id_session', $id_session, PDO::PARAM_INT);
+            $stmt->bindParam(':id_session', $id_session);
             $stmt->execute();
 
             //Vérifie si des résultats sont retournés
             if ($stmt->rowCount() == 0) {
-                error_log("Aucune session trouvée pour l'id_session: $id_session");
-                return false;
+                return json_encode(['status' => 'error', 'message' => 'aucune session trouvee']);
             }
 
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
         
             // Vérification des hashs
             if ($result && password_verify($auth_id, $result['auth_id']) && password_verify($auth_pass, $result['auth_pass'])) {
-                return [
-                    'id_session' => $result['id_session'],
-                    'id_user' => $result['id_user']
-                ];
+                true;
             } else {
-                error_log("Erreur de vérification des hashs pour auth_id ou auth_pass");
-                return false;
+                false;
             }
         }
 
         function suppSession($idSession){
-            // L'id de session est encoder dans l'url, il faut le décoder pour correspondre au hash
-            $idSessionDecode = urldecode($idSession);
             $query = "DELETE FROM Sessions
                     WHERE id_session = :idSession";
 
             $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(':idSession', $idSessionDecode, PDO::PARAM_STR);
+            $stmt->bindParam(':idSession', $idSession, PDO::PARAM_INT);
             return $stmt->execute();
         }
 

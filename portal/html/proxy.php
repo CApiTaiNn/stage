@@ -39,7 +39,7 @@
         setcookie("SESSION_ID", $sessionId, [
             'expires' => time() + 3600,
             'path' => '/',
-            'secure' => true, 
+            'secure' => false, 
             'httponly' => true, 
             'samesite' => 'Strict'
         ]);

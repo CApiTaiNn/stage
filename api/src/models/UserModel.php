@@ -16,15 +16,33 @@
         }
 
         function getAllUsers() {
-            $query = "SELECT * FROM Users";
+            /*
+            $query = "SELECT
+                    u.name,
+                    u.firstname,
+                    u.email,
+                    u.phone,
+                    s.date,
+                    COUNT(id_session) connection_count,
+                    MAX(s.date) as last_session_date,
+                    CASE 
+                        WHEN TIMESTAMPDIFF(MINUTE, MAX(s.date), NOW()) <= 60 THEN true
+                        ELSE false
+                    END AS status
+                    FROM Sessions as s
+                    INNER JOIN Users as u
+                    ON s.id_user = u.id_user
+                    GROUP BY u.id_user, u.name, u.firstname, u.email, u.phone, s.date 
+                    ORDER BY date DESC";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             
             if ($stmt->execute()) {
-                return $stmt->fetchAll();
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
             }else{
                 return false;
             }
+                */
         }
 
         function getUserId($name, $firstname, $email){

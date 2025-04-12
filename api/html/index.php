@@ -116,7 +116,7 @@
 
         $hashId = password_hash($code[0], PASSWORD_DEFAULT);
         $hashCode = password_hash($code[1], PASSWORD_DEFAULT);
-        $idSession = password_hash(generateId(), PASSWORD_DEFAULT);
+        $idSession = random_int(0, 9999999999);
 
         //Vérification de l'existence de l'utilisateur
         //Si l'utilisateur n'existe pas, on le crée
@@ -142,7 +142,8 @@
             $response->getBody()->write(json_encode(['status' => 'success']));
             return $response->withStatus(201);
         }else {
-            return $response->getBody()->write(json_encode(['status' => 'error']))->withStatus(400);
+            $response->getBody()->write(json_encode(['status' => 'error']));
+            return $response->withStatus(400);
         }
     });
 
@@ -158,11 +159,10 @@
         $db->setDB($data['orga'], $config['username'], $config['password']);
         $sessionController->setDB($db);
 
-        $idSessionUser = $sessionController->valideAuth($data['id_session'], $data['id'], $data['code']);
         // Validation de l'authentification
-        if ($idSessionUser) {
-            // Réponse en cas de succès, on renvoie l'id de la session et de l'utilisateur
-            $response->getBody()->write(json_encode(['status' => 'success','id_user' => $idSessionUser['id_user']]));
+        if ($sessionController->valideAuth( $data['id_session'], $data['id'], $data['code'])) {
+            // Réponse en cas de succès
+            $response->getBody()->write(json_encode(['status' => 'success']));
             return $response->withStatus(201); 
         } else {
             // Réponse en cas d'échec

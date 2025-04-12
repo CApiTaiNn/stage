@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
 
         const orga = document.getElementById('orga').value;
-        const email = document.getElementById('email').value;
         const form = document.getElementById('loginForm');
         const formData = new FormData(form);
         const apiUrl = "proxy.php";
