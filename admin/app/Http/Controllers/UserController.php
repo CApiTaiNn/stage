@@ -42,7 +42,6 @@ class UserController extends Controller{
     public function getAllUsers(){
         $response = $this->userModel->getAllUsers();
         $users = [];
-
         if($response['status'] === 'success'){
             foreach($response['data'] as $user){
                 $u = new User();
@@ -51,8 +50,8 @@ class UserController extends Controller{
                 $u->setFirstname($user['firstname']);
                 $u->setEmail($user['email']);
                 $u->setPhone($user['phone']);
-                $u->setNbCo($user['nbCo']);
-                $u->setLastCo($user['lastCo']);
+                $u->setNbCo($user['connection_count']);
+                $u->setLastCo($user['last_session_date']);
                 $u->setStatus($user['status']);
                 $users[] = $u;
             }

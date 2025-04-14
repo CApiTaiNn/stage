@@ -73,6 +73,7 @@
     if ($result['status'] === 'success') {
         $ip = $_SERVER['REMOTE_ADDR'];
         if (filter_var($ip, FILTER_VALIDATE_IP)) {
+            $_SESSION['attempts'] = 0;
             $command = "sudo /sbin/iptables -A INPUT -s $ip -j ACCEPT";
             //shell_exec($command);
             echo json_encode(["status" => "success", "redirect" => "https://www.google.fr"]);
@@ -83,7 +84,7 @@
         }
     }else{
         $_SESSION['attempts']++;
-        if ($_SESSION['attempts'] >= 3) {
+        if ($_SESSION['attempts'] >= 50) {
 
             /**
              * Configuration de la requete de suppression de la session

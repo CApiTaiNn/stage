@@ -69,7 +69,9 @@
                             <th class="px-4 py-2 border border-gray-300">Prénom</th>
                             <th class="px-4 py-2 border border-gray-300">Email</th>
                             <th class="px-4 py-2 border border-gray-300">Téléphone</th>
-                            
+                            <th class="px-4 py-2 border border-gray-300">Nombre de connexions</th>
+                            <th class="px-4 py-2 border border-gray-300">Dernière connexion</th>
+                            <th class="px-4 py-2 border border-gray-300">Statut</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -83,7 +85,18 @@
                                     <td class="px-4 py-2 border border-gray-300">{{ $user->getName() }}</td>
                                     <td class="px-4 py-2 border border-gray-300">{{ $user->getFirstname() }}</td>
                                     <td class="px-4 py-2 border border-gray-300">{{ $user->getEmail() }}</td>
-                                    <td class="px-4 py-2 border border-gray-300">{{ $user->getName() }}</td>
+                                    <td class="px-4 py-2 border border-gray-300">{{ $user->getPhone() }}</td>
+                                    <td class="px-4 py-2 border border-gray-300">{{ $user->getNbCo() }}</td>
+                                    <td class="px-4 py-2 border border-gray-300">{{ $user->getLastCo() }}</td>
+                                    @if ($user->getStatus() === 1)
+                                        <td class="px-4 py-2 border border-gray-300">
+                                            <img src=" {{ asset('pictures/cocher.png') }} " alt="check" class="size-7">
+                                        </td>
+                                    @else
+                                        <td class="px-4 py-2 border border-gray-300">
+                                            <img src=" {{ asset('pictures/croix.png') }} " alt="cross" class="size-6">
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         @endif

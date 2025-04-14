@@ -51,16 +51,16 @@
 
             //Vérifie si des résultats sont retournés
             if ($stmt->rowCount() == 0) {
-                return json_encode(['status' => 'error', 'message' => 'aucune session trouvee']);
+                return false;
             }
 
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
         
             // Vérification des hashs
             if ($result && password_verify($auth_id, $result['auth_id']) && password_verify($auth_pass, $result['auth_pass'])) {
-                true;
+                return true;
             } else {
-                false;
+                return false;
             }
         }
 
