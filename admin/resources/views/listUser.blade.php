@@ -53,7 +53,7 @@
                     <tbody>
                         @if (empty($users))
                             <tr>
-                                <td colspan="4" class="px-4 py-2 border border-gray-300 text-center">Aucun utilisateur trouvé</td>
+                                <td colspan="7" class="px-4 py-2 border border-gray-300 text-center">Aucun utilisateur trouvé</td>
                             </tr>
                         @else
                             @foreach ($users as $user)
