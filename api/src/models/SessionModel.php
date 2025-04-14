@@ -105,6 +105,8 @@
                     INNER JOIN Users as u
                     ON s.id_user = u.id_user";
             $stmt = $this->conn->prepare($query);
+
+            
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }

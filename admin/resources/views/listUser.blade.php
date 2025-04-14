@@ -73,14 +73,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($users as $user)
+                        @if (empty($users))
                             <tr>
-                                <td class="px-4 py-2 border border-gray-300">{{ $user->getName() }}</td>
-                                <td class="px-4 py-2 border border-gray-300">{{ $user->getFirstname() }}</td>
-                                <td class="px-4 py-2 border border-gray-300">{{ $user->getEmail() }}</td>
-                                <td class="px-4 py-2 border border-gray-300">{{ $user->getName() }}</td>
+                                <td colspan="4" class="px-4 py-2 border border-gray-300 text-center">Aucun utilisateur trouvé</td>
                             </tr>
-                        @endforeach
+                        @else
+                            @foreach ($users as $user)
+                                <tr>
+                                    <td class="px-4 py-2 border border-gray-300">{{ $user->getName() }}</td>
+                                    <td class="px-4 py-2 border border-gray-300">{{ $user->getFirstname() }}</td>
+                                    <td class="px-4 py-2 border border-gray-300">{{ $user->getEmail() }}</td>
+                                    <td class="px-4 py-2 border border-gray-300">{{ $user->getName() }}</td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
             </article>
