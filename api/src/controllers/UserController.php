@@ -13,8 +13,8 @@
             $this->userModel->setDB($db->getConnection());
         }
 
-        public function getAllUsers(){
-            return $this->userModel->getAllUsers();
+        public function getAllUsers($name){
+            return $this->userModel->getAllUsers($name);
         }
 
         public function createUser($user){

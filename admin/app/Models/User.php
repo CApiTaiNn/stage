@@ -66,12 +66,12 @@
             return $this->phone;
         }
         
-        
-
-        function getAllUsers() {
+        function getAllUsers($name = null) {
             return Http::withHeaders([
                 "X-API-KEY" => getenv('API_KEY'),
                 "ORGANIZATION" => session('name'),
-            ])->get(config('url.AllUser'));
+            ])->get(config('url.AllUser'),[
+                'name' => $name
+            ]);
         }
     }

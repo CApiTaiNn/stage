@@ -39,8 +39,9 @@ class UserController extends Controller{
     }
 
     
-    public function getAllUsers(){
-        $response = $this->userModel->getAllUsers();
+    public function getAllUsers(Request $request){
+        $name = $request->input('name', null);
+        $response = $this->userModel->getAllUsers($name);
         $users = [];
         if($response['status'] === 'success'){
             foreach($response['data'] as $user){

@@ -15,7 +15,7 @@
             $this->conn = $con;
         }
 
-        function getAllUsers() {
+        function getAllUsers($name = null) {
             $query = "SELECT
                     u.id_user,
                     u.name,
@@ -29,10 +29,21 @@
                         ELSE false
                     END AS status
                     FROM Users as u
-                    JOIN Sessions as s ON u.id_user = s.id_user
-                    GROUP BY u.id_user, u.name, u.firstname, u.email, u.phone";
+                    JOIN Sessions as s ON u.id_user = s.id_user";
+
+            $params = [];
+            if (!empty($name)) {
+                $query .= " WHERE u.name LIKE :name";
+                $params[':name'] = '%' . $name . '%';
+            }
+
+            $query .= " GROUP BY u.id_user, u.name, u.firstname, u.email, u.phone";
             $stmt = $this->conn->prepare($query);
-            $stmt->execute();
+            
+            foreach ($params as $key => $value) {
+                $stmt->bindValue($key, $value);
+            }
+
             if ($stmt->execute()) {
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
             }else{

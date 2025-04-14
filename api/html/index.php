@@ -33,14 +33,16 @@
         return $response;
     });
 
+
     $app->get('/users', function (Request $request, Response $response) use ($db, $userController) {
+        $name = $request->getQueryParams()['name'] ?? null;
         //Configuration de la base de données
         $orga = $request->getHeaderLine('ORGANIZATION');
         $db->setDB($orga, getenv('USERNAMEBOSS'), getenv('PASSWORDBOSS'));
         $userController->setDB($db);
 
         //Récupération de tous les utilisateurs
-        if($userTab = $userController->getAllUsers()){
+        if($userTab = $userController->getAllUsers($name)){
             $response->getBody()->write(json_encode(['status' => 'success', 'data' => $userTab]));
             return $response->withStatus(200);
         }else{
