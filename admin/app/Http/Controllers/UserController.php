@@ -43,18 +43,21 @@ class UserController extends Controller{
         $response = $this->userModel->getAllUsers();
         $users = [];
 
-        foreach($response['data'] as $user){
-            $u = new User();
-            $u->setId($user['id_user']);
-            $u->setName($user['name']);
-            $u->setFirstname($user['firstname']);
-            $u->setEmail($user['email']);
-            $u->setPhone($user['phone']);
-            $u->setNbCo($user['nbCo']);
-            $u->setLastCo($user['lastCo']);
-            $u->setStatus($user['status']);
-            $users[] = $u;
+        if($response['status'] === 'success'){
+            foreach($response['data'] as $user){
+                $u = new User();
+                $u->setId($user['id_user']);
+                $u->setName($user['name']);
+                $u->setFirstname($user['firstname']);
+                $u->setEmail($user['email']);
+                $u->setPhone($user['phone']);
+                $u->setNbCo($user['nbCo']);
+                $u->setLastCo($user['lastCo']);
+                $u->setStatus($user['status']);
+                $users[] = $u;
+            }
+            return view('listUser', ['users' => $users]);
         }
-        return view('listUser', ['users' => $users]);
+        return view('listUser', ['users' => []]);
     }
 }
