@@ -26,6 +26,7 @@
             // Rediriger vers la page d'accueil
             return redirect()->route('home')->with('success', 'Votre message a été envoyé avec succès.');
             */
+            return redirect()->route('home')->with('success', 'Votre message a été envoyé avec succès.');
         }
     }
 ?>

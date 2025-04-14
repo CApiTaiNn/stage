@@ -14,7 +14,7 @@ document.getElementById("autForm").addEventListener("submit", function(event) {
     event.preventDefault();
     let formData = new FormData(this);
 
-    fetch("script/auth.php", {
+    fetch("script/js/auth.php", {
         method: "POST",
         body: formData
     })

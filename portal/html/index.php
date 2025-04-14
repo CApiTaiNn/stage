@@ -51,6 +51,6 @@
             </article>
         </section>
     </main>
-    <script src="script/portail.js"></script>
+    <script src="script/js/portail.js"></script>
 </body>
 </html>
