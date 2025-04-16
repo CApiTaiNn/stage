@@ -1,5 +1,5 @@
 <?php
-    $orga = $_GET['orga'] ?? " ";
+    $orga = getenv('ORGANIZATION');
 ?>
 <!DOCTYPE html>
 <html lang="fr">

@@ -21,7 +21,7 @@ services:
     volumes:
       - ./api:/var/www
     env_file:
-      - path : ./.env
+      - path : ./api/.env
     networks:
       - network_api_admin
       - network_api_db
@@ -39,7 +39,7 @@ services:
     volumes:
       - ./admin:/var/www
     env_file:
-      - path : ./.env
+      - path : ./admin/.env
     networks:
       - network_api_admin
     
@@ -53,7 +53,7 @@ services:
     ports:
       - 8080:80
     env_file:
-      - path : ./.env
+      - path : ./portal/.env
 
   phpmyadmin:
     image: phpmyadmin:5.2

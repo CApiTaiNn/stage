@@ -1,6 +1,6 @@
 <?php
     //session_start();
-    $orga = $_GET['orga'] ?? " ";
+    $orga = getenv('ORGANIZATION');
     $id_session = $_COOKIE['SESSION_ID'];
 ?>
 <!DOCTYPE html>
@@ -44,6 +44,6 @@
             <p id="error-message" style="color: red; display: none;"></p>
         </section>
     </main>
-    <script src="script/auth.js"></script>
+    <script src="script/js/auth.js"></script>
 </body>
 </html>

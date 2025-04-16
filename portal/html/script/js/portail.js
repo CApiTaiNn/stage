@@ -36,8 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const orga = document.getElementById('orga').value;
         const form = document.getElementById('loginForm');
         const formData = new FormData(form);
-        const apiUrl = "proxy.php";
-
+        const apiUrl = "script/php/proxy.php";
 
         const requestOption = {
             method: 'POST',
@@ -56,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return response;
         })
         .then(data => {
-            window.location.href = `authentication.php?orga=${orga}`;
+            window.location.href = `authentication.php`;
         })
         .catch(error => {
             console.error('Error:', error);

@@ -14,7 +14,7 @@ document.getElementById("autForm").addEventListener("submit", function(event) {
     event.preventDefault();
     let formData = new FormData(this);
 
-    fetch("script/js/auth.php", {
+    fetch("script/php/auth.php", {
         method: "POST",
         body: formData
     })
@@ -23,7 +23,7 @@ document.getElementById("autForm").addEventListener("submit", function(event) {
         if (data.status === "success") {
             window.location.href = data.redirect;
         } else if (data.message === "tentativeMaxAtteinte") {
-            window.location.href = `index.php?orga=${data.orga}`;
+            window.location.href = `index.php`;
         }else {
             document.getElementById("error-message").textContent = data.message;
             document.getElementById("error-message").style.display = "block";
