@@ -84,19 +84,19 @@
         }
     }else{
         $_SESSION['attempts']++;
-        if ($_SESSION['attempts'] >= 50) {
+        if ($_SESSION['attempts'] >= 3) {
 
             /**
              * Configuration de la requete de suppression de la session
              */
-            $url = 'http://api/errorAuth';
+            $url = 'http://api/invalideSession';
             $data = [
                 'orga' => $orga,
                 'id_session' => $idSession
             ];
             $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_HTTPHEADER, [

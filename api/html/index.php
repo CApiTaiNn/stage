@@ -128,7 +128,6 @@
 
         //On recupère l'id de l'utilisateur
         $id_user = $userController->getUserId($data['name'], $data['firstname'], $data['email']);
-
         //Puis on creer la session pour l'utilisateur
         if ($sessionController->createSession($idSession, $id_user, $hashId, $hashCode)) {
 
@@ -144,6 +143,7 @@
             $response->getBody()->write(json_encode(['status' => 'success']));
             return $response->withStatus(201);
         }else {
+            error_log("Erreur lors de la création de la session");
             $response->getBody()->write(json_encode(['status' => 'error']));
             return $response->withStatus(400);
         }
@@ -176,26 +176,25 @@
 
 
     
-    //REQUESTS DELETE
-    $app->delete('/errorAuth', function (Request $request, Response $response) use ($db, $sessionController) {
+    //REQUESTS PUT
+    $app->put('/invalideSession', function (Request $request, Response $response) use ($db, $sessionController) {
         //Récupération des données
         $data = json_decode($request->getBody()->getContents(), true);
 
         //Recupération de la base de données
         $config = $db->getDatabaseConfig($data['orga']);
-
         //Connexion à la base de données
         $db->setDB($data['orga'], $config['username'], $config['password']);
         $sessionController->setDB($db);
 
         //Suppression de la session créer pour l'utilisateur
-        if ($sessionController->suppSession($data['id_session'])) {
+        if ($sessionController->invalideSession($data['id_session'])) {
             // Réponse en cas de succès
-            $response->getBody()->write(json_encode(['status' => 'success', 'message' => 'Session supprimee']));
+            $response->getBody()->write(json_encode(['status' => 'success', 'message' => 'Session invalide']));
             return $response->withStatus(200);
         } else {
             // Réponse en cas d'échec
-            $response->getBody()->write(json_encode(['status' => 'error', 'message' => 'Erreur lors de la suppression de la session']));
+            $response->getBody()->write(json_encode(['status' => 'error', 'message' => 'Erreur lors de l`invalidation de la session']));
             return $response->withStatus(400);
         }
     });

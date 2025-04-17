@@ -26,8 +26,8 @@
             return $this->sessionModel->valideAuth($id_session, $auth_id, $auth_pass);
         }
 
-        function suppSession($id_session){
-            return $this->sessionModel->suppSession($id_session);
+        function invalideSession($id_session){
+            return $this->sessionModel->invalideSession($id_session);
         }
 
         function getCurrentSession(){

@@ -28,8 +28,8 @@
         }
 
         function createSession($id_session, $id_user, $auth_id, $auth_pass){
-            $query = "INSERT INTO Sessions (id_session, id_user, auth_id, auth_pass) 
-                    VALUES (:id_session, :id_user, :auth_id, :auth_pass)";
+            $query = "INSERT INTO Sessions (id_session, id_user, auth_id, auth_pass, status) 
+                    VALUES (:id_session, :id_user, :auth_id, :auth_pass, true)";
 
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':id_session', $id_session, PDO::PARAM_INT);
@@ -64,13 +64,18 @@
             }
         }
 
-        function suppSession($idSession){
-            $query = "DELETE FROM Sessions
-                    WHERE id_session = :idSession";
-
+        function invalideSession($idSession){
+            $query = "UPDATE Sessions SET status = 0 WHERE id_session = :idSession";
+            
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':idSession', $idSession, PDO::PARAM_INT);
-            return $stmt->execute();
+            
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+            
         }
 
         /*
