@@ -8,6 +8,7 @@
         'CurrentSession' => 'http://api/currentsession',
         'DaySession' => 'http://api/daysession',
         '10LastSession' => 'http://api/10lastsession',
+        'UserError' => 'http://api/userError',
     ];
 
 ?>

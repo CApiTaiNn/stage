@@ -17,6 +17,10 @@
             return $this->userModel->getAllUsers($name);
         }
 
+        public function getUserError(){
+            return $this->userModel->getUserError();
+        }
+
         public function createUser($user){
             return $this->userModel->createUser($user);
         }

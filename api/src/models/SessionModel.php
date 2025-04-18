@@ -108,7 +108,8 @@
             $query = "SELECT u.name, u.firstname, TIME(s.date) AS time 
                     FROM Sessions as s
                     INNER JOIN Users as u
-                    ON s.id_user = u.id_user";
+                    ON s.id_user = u.id_user
+                    WHERE s.status = true";
             $stmt = $this->conn->prepare($query);
 
             

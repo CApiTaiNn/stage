@@ -13,6 +13,7 @@
         private $nbCo;
         private $lastCo;
         private $status;
+        private $nbError;
 
         function setId($val) {
             $this->id_user = $val;
@@ -37,6 +38,9 @@
         }
         function setStatus($val) {
             $this->status = $val;
+        }
+        function setNbError($val) {
+            $this->nbError = $val;
         }
 
 
@@ -65,6 +69,9 @@
         function getPhone() {
             return $this->phone;
         }
+        function getNbError() {
+            return $this->nbError;
+        }
         
         function getAllUsers($name = null) {
             return Http::withHeaders([
@@ -73,5 +80,13 @@
             ])->get(config('url.AllUser'),[
                 'name' => $name
             ]);
+        }
+
+
+        function getUserError() {
+            return Http::withHeaders([
+                "X-API-KEY" => getenv('API_KEY'),
+                "ORGANIZATION" => session('name'),
+            ])->get(config('url.UserError'));
         }
     }

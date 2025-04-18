@@ -60,4 +60,23 @@ class UserController extends Controller{
         }
         return view('listUser', ['users' => []]);
     }
+
+    public function getUserError(){
+        $response = $this->userModel->getUserError();
+        $users = [];
+        if($response['status'] === 'success'){
+            foreach($response['data'] as $user){
+                $u = new User();
+                $u->setId($user['id_user']);
+                $u->setName($user['name']);
+                $u->setFirstname($user['firstname']);
+                $u->setEmail($user['email']);
+                $u->setPhone($user['phone']);
+                $u->setNbError($user['count_error']);
+                $users[] = $u;
+            }
+            return view('userError', ['users' => $users]);
+        }
+        return view('userError', ['users' => []]);
+    }
 }

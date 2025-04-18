@@ -37,7 +37,8 @@
                 $params[':name'] = '%' . $name . '%';
             }
 
-            $query .= " GROUP BY u.id_user, u.name, u.firstname, u.email, u.phone";
+            $query .= " AND s.status = true GROUP BY u.id_user, u.name, u.firstname, u.email, u.phone";
+
             $stmt = $this->conn->prepare($query);
             
             foreach ($params as $key => $value) {
@@ -50,6 +51,18 @@
                 return false;
             }
                 
+        }
+
+        function getUserError(){
+            $query = "SELECT u.id_user, u.name, u.firstname, u.email, u.phone, count(s.id_session) as count_error
+                    FROM Users as u
+                    JOIN Sessions as s ON u.id_user = s.id_user
+                    WHERE s.status = false
+                    GROUP BY u.id_user, u.name, u.firstname, u.email, u.phone";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         function getUserId($name, $firstname, $email){

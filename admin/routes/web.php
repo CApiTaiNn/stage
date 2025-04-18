@@ -17,9 +17,13 @@ Route::get('/', function () {
     return view('login');
 });
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
 Route::get('/listUser', [UserController::class, 'getAllUsers'])->name('listUser');
 
+Route::get('/userError', [UserController::class, 'getUserError'])->name('userError');
+
 Route::get('/logout', [AccountController::class, 'logout'])->name('logout');
+
 Route::get('/contactAdmin', [ContactController::class, 'contactAdmin'])->name('contactAdmin');
 /**
  * POST

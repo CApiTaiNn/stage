@@ -99,6 +99,22 @@
         }
     });
 
+    $app->get('/userError', function (Request $request, Response $response) use ($db, $userController) {
+        //Configuration de la base de données
+        $orga = $request->getHeaderLine('ORGANIZATION');
+        $db->setDB($orga, getenv('USERNAMEBOSS'), getenv('PASSWORDBOSS'));
+        $userController->setDB($db);
+
+        //Récupération de tous les utilisateurs
+        if($userTab = $userController->getUserError()){
+            $response->getBody()->write(json_encode(['status' => 'success', 'data' => $userTab]));
+            return $response->withStatus(200);
+        }else{
+            $response->getBody()->write(json_encode(['status' => 'error']));
+            return $response->withStatus(400);
+        }
+    });
+
 
     //REQUESTS POST
     $app->post('/login', function (Request $request, Response $response) use ($db, $userController, $sessionController) {
