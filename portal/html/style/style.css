@@ -118,16 +118,18 @@ div > img {
 }
 
 @media screen and (max-width: 1330px) {
-    div > img {
-        max-width: 20%;
-        height: 10%;
-        margin-top: auto;
+    main{
+        width: 50%;
     }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1000px) {
     body {
         flex-direction: column;
+    }
+
+    main{
+        width: 90%;
     }
 
     div > img {
@@ -137,11 +139,11 @@ div > img {
     }
 
     h3{
-        font-size: x-small;
+        font-size: medium;
     }
 
     .cgu{
-        font-size: x-small;
+        font-size: xx-small;
     }
 }
 
