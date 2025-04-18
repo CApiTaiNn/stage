@@ -10,7 +10,20 @@
     $apiUrl = "http://api/login";
 
     //Récupération des données du formulaire
-    $data = json_decode(file_get_contents('php://input'), true);
+    $orga = trim($_POST['orga']);
+    $name = trim($_POST['name']);
+    $firstname = trim($_POST['firstname']);
+    $email = trim($_POST['email']);
+    $phone = trim($_POST['phone']);
+    $cgu = isset($_POST['cgu']);
+    $data = [
+        'orga' => $orga,
+        'name' => $name,
+        'firstname' => $firstname,
+        'email' => $email,
+        'phone' => $phone,
+        'cgu' => $cgu
+    ];
 
     //Préparation de la requete
     $ch = curl_init();

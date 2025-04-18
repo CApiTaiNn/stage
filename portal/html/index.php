@@ -24,8 +24,7 @@
                     <h3 data-lang-fr="Formulaire de connexion" data-lang-en="Login Form">Formulaire de connexion</h3>
                     <img src="assets/images/wifi.png" alt="wifi">
                 </div>
-                <form id="loginForm">
-
+                <form id="loginForm" action="script/php/proxy.php" method="post">
                     <input type="text" name="orga" id="orga" value=<?=$orga?> hidden>
 
                     <label for="name" data-lang-fr="Nom" data-lang-en="Name">Nom</label>
@@ -35,7 +34,7 @@
                     <input type="text" name="firstname" id="firstname" required>
 
                     <label for="email" data-lang-fr="Email" data-lang-en="Email">Email</label>
-                    <input type="email" name="email" id="email">
+                    <input type="email" name="email" id="email" required>
                     <p data-lang-fr="Vous recevrez sur cette email vos identifiants de connexion" data-lang-en="You will receive your login credentials on this email">Vous recevrez sur cette email vos identifiants de connexion</p>
 
                     <label for="phone" data-lang-fr="Téléphone" data-lang-en="Phone">Téléphone</label>

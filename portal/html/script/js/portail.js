@@ -29,23 +29,15 @@ document.addEventListener('DOMContentLoaded', function() {
      * Récupère la reponse API
      * Si valide, redirige vers la page d'authentification
     */
-    const submitButton = document.getElementById('submit');
-    submitButton.addEventListener('click', function(event) {
+    document.getElementById("loginForm").addEventListener('submit', function(event) {
         event.preventDefault();
 
-        const orga = document.getElementById('orga').value;
-        const form = document.getElementById('loginForm');
-        const formData = new FormData(form);
+        let formData = new FormData(this);
         const apiUrl = "script/php/proxy.php";
 
-        
         const requestOption = {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(Object.fromEntries(formData.entries())),
-            credentials: 'include'
+            body: formData,
         };
 
         fetch(apiUrl, requestOption)

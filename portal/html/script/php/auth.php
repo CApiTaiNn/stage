@@ -53,11 +53,6 @@
     ]);
 
     $response = curl_exec($ch);
-    // Vérifier si une erreur s'est produite
-    if (curl_errno($ch)) {
-        echo 'Erreur cURL: ' . curl_error($ch);
-        exit;
-    }
     curl_close($ch);
     $result = json_decode($response, true);
     

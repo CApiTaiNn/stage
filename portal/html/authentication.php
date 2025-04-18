@@ -24,8 +24,7 @@
                 <img src="assets/logo/<?=$orga?>.png" alt="logo organisation">
                 <h3 data-lang-fr="Formulaire d'authentification" data-lang-en="Authentification Form">Formulaire de connexion</h3>
 
-                <form id="autForm" action="script/auth.php" method="post">
-
+                <form id="autForm" action="script/php/auth.php" method="post">
                     <input type="text" name="orga" id="orga" value=<?=$orga?> hidden>
                     <input type="text" name="id_session" id="id_session" value=<?=$id_session?> hidden>
 
