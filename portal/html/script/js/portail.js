@@ -31,16 +31,12 @@ document.addEventListener('DOMContentLoaded', function() {
     */
     document.getElementById("loginForm").addEventListener('submit', function(event) {
         event.preventDefault();
-
         let formData = new FormData(this);
-        const apiUrl = "script/php/proxy.php";
 
-        const requestOption = {
+        fetch("script/php/proxy.php", {
             method: 'POST',
-            body: formData,
-        };
-
-        fetch(apiUrl, requestOption)
+            body: formData
+        })
         .then(response => {
             if (!response.ok) {
                 throw new Error("HTTP error " + response.status);
