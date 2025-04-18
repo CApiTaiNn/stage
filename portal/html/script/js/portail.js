@@ -38,13 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = new FormData(form);
         const apiUrl = "script/php/proxy.php";
 
-        // Validation des champs requis
-        if (!orga || !formData.get('name') || !formData.get('firstname') || !formData.get('email') || !formData.get('phone') || !formData.get('cgu')) {
-            alert('Veuillez remplir tous les champs requis.');
-            return; // Arrête l'exécution si un champ est manquant
-        }
-
-
+        
         const requestOption = {
             method: 'POST',
             headers: {
