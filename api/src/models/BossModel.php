@@ -11,8 +11,9 @@
         private $name;
         private $password;
         private $email;
-        private $address;
-        private $company;
+        private $phone;
+        private $a2f_activated;
+        private $a2f_secret;
 
         function setDB($con){
             $this->conn = $con;
@@ -64,6 +65,71 @@
                 } else {
                     return false;
                 }
+            }
+        }
+
+
+        function a2fIsActivated($name) {
+            // Config de la bdd
+            $db = new Database();
+            $db->setDB(getenv('DBNAMEBOSS'), getenv('USERNAMEBOSS'), getenv('PASSWORDBOSS'));
+            $this->conn = $db->getConnection();
+            
+            $query = "SELECT a2f_activated FROM Boss WHERE name = :name";
+        
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':name', $name);
+            $stmt->execute();
+            $response = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        
+            // Vérifier si aucun boss n'a été trouvé avec ce nom
+            if (empty($response)) {
+                return false;
+            }
+
+            if ($response[0]['a2f_activated'] == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+
+        function setSecret($name, $secret) {
+            // Config de la bdd
+            $db = new Database();
+            $db->setDB(getenv('DBNAMEBOSS'), getenv('USERNAMEBOSS'), getenv('PASSWORDBOSS'));
+            $this->conn = $db->getConnection();
+            
+            $query = "UPDATE Boss SET a2f_secret = :secret, a2f_activated = true WHERE name = :name";
+        
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':secret', $secret);
+        
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function getSecret($name) {
+            // Config de la bdd
+            $db = new Database();
+            $db->setDB(getenv('DBNAMEBOSS'), getenv('USERNAMEBOSS'), getenv('PASSWORDBOSS'));
+            $this->conn = $db->getConnection();
+            
+            $query = "SELECT a2f_secret FROM Boss WHERE name = :name";
+        
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':name', $name);
+        
+            if ($stmt->execute()) {
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } else {
+                return false;
             }
         }
         

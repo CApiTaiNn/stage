@@ -232,6 +232,47 @@
         }   
     });
 
+    $app->post('/a2fIsActivated', function (Request $request, Response $response) use ($bossController) {
+        //Récupération des données
+        $data = json_decode($request->getBody()->getContents(), true);
+
+        //Verifie si l'authentification à deux facteurs est activée
+        if($bossController->a2fIsActivated($data['name'])){
+            $response->getBody()->write(json_encode(['status' => 'success']));
+            return $response->withStatus(200);
+        }else{
+            $response->getBody()->write(json_encode(['status' => 'error']));
+            return $response->withStatus(401);
+        }   
+    });
+
+    $app->post('/setbosssecret', function (Request $request, Response $response) use ($bossController) {
+        //Récupération des données
+        $data = json_decode($request->getBody()->getContents(), true);
+        
+        //Enregistre le secret dans la base de données
+        if($bossController->setSecret($data['name'], $data['secret'])){
+            $response->getBody()->write(json_encode(['status' => 'success']));
+            return $response->withStatus(200);
+        }else{
+            $response->getBody()->write(json_encode(['status' => 'error']));
+            return $response->withStatus(401);
+        }   
+    });
+
+    $app->get('/getbosssecret', function (Request $request, Response $response) use ($bossController) {
+        //Récupération des données
+        $name = $request->getQueryParams()['name'];
+        //Recupere le secret dans la base de données
+        if($secret = $bossController->getSecret($name)){
+            $response->getBody()->write(json_encode(['status' => 'success', 'data' => $secret]));
+            return $response->withStatus(200);
+        }else{
+            $response->getBody()->write(json_encode(['status' => 'error']));
+            return $response->withStatus(401);
+        }   
+    });
+
 
     //REQUESTS OPTIONS
     $app->options('/{routes:.+}', function (Request $request, Response $response) {

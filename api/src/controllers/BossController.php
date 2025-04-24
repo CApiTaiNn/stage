@@ -19,5 +19,17 @@
         function login($name, $passwordHash){
             return $this->bossModel->login($name, $passwordHash);
         }
+
+        function a2fIsActivated($name){
+            return $this->bossModel->a2fIsActivated($name);
+        }
+
+        function setSecret($name, $secret){
+            return $this->bossModel->setSecret($name, $secret);
+        }
+
+        function getSecret($name){
+            return $this->bossModel->getSecret($name);
+        }
     }
 ?>

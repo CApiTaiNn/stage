@@ -18,6 +18,7 @@ class BossController extends Controller{
         return $this->bossModel->getAllBoss();
     }
 
+
     /**
      * @param Request $request
      * 
@@ -27,15 +28,38 @@ class BossController extends Controller{
         $name = $request->input('name');
         $password = $request->input('password');    
 
-        $response = $this->bossModel->login($name, $password);
-
-        if ($response->status() == 200) {
+        if ($this->bossModel->login($name, $password)->status() == 200) {
             session(['name' => $name]);
-            return redirect()->route('home');
+            $response = $this->bossModel->a2fIsActivated($name);
+            if($response->status() == 200){
+                return redirect()->route('a2f');
+            }else{
+                dd($response->body());
+                return redirect()->route('a2fActivation');
+            }
         }else{
             return back()->withErrors([
                 'name' => 'Identifiant ou mot de passe incorrect',
             ]);
+        }
+    }
+
+
+    public function setSecret($name, $secret){
+        $response = $this->bossModel->setSecret($name, $secret);
+        if($response->status() == 200){
+            return true;
+        }else{
+            false;
+        }
+    }
+
+    public function getSecret($name){
+        $response = $this->bossModel->getSecret($name);
+        if($response->status() == 200){
+            return $response->json()['data'][0]['a2f_secret'];
+        }else{
+            return false;
         }
     }
 }

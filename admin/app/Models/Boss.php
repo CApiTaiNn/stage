@@ -8,16 +8,10 @@ use Illuminate\Support\Facades\Http;
 class Boss extends Model{
     private $name;
     private $password;
-    private $email;
-    private $company;
+    private $establishment;
+    private $a2f_activated;
+    private $a2f_secret;
 
-    function __construct(){
-        $this->name = "";
-        $this->password = "";
-        $this->email = "";
-        $this->address = "";
-        $this->company = "";
-    }
 
     function getAllBoss(){
         return Http::get(config('url.AllBoss'), [
@@ -29,12 +23,37 @@ class Boss extends Model{
         ]);
     }
 
+    function a2fIsActivated($name){
+        return Http::withHeaders([
+            "X-API-KEY" => getenv('API_KEY')
+        ])->post(config('url.A2FIsActivated'), [
+            'name' => $name
+        ]);
+    }
+
     function login($name, $passwordHash){
         return Http::withHeaders([
             "X-API-KEY" => getenv('API_KEY')
         ])->post(config('url.BossLogin'), [
             'name' => $name,
             'password' => $passwordHash
+        ]);
+    }
+
+    function setSecret($name, $secret){
+        return Http::withHeaders([
+            "X-API-KEY" => getenv('API_KEY')
+        ])->post(config('url.SetBossSecret'), [
+            'name' => $name,
+            'secret' => $secret
+        ]);
+    }
+
+    function getSecret($name){
+        return Http::withHeaders([
+            "X-API-KEY" => getenv('API_KEY')
+        ])->get(config('url.GetBossSecret'), [
+            'name' => $name
         ]);
     }
 }

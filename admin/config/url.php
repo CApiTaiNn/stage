@@ -9,6 +9,9 @@
         'DaySession' => 'http://api/daysession',
         '10LastSession' => 'http://api/10lastsession',
         'UserError' => 'http://api/userError',
+        'A2FIsActivated' => 'http://api/a2fIsActivated',
+        'SetBossSecret' => 'http://api/setbosssecret',
+        'GetBossSecret' => 'http://api/getbosssecret'
     ];
 
 ?>
