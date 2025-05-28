@@ -42,9 +42,12 @@
 
                     <div class="cgu">
                         <input type="checkbox" name="cgu" id="cgu" required>
-                        <label for="cgu" data-lang-fr="J'accepte les conditions générales d'utilisations" data-lang-en="I accept the terms and conditions">J'accepte les conditions générales d'utilisations</label>
+                        <label for="cgu" data-lang-fr="J'accepte les conditions générales d'utilisations" data-lang-en="I accept the terms and conditions">
+                            <a href="/assets/CGU.pdf" target="_blank">
+                                J'accepte les conditions générales d'utilisations
+                            </a>
+                        </label>
                     </div>
-
                     <button id='submit' type="submit" data-lang-fr="Recevoir mon mot de passe" data-lang-en="Receive my password">Recevoir mon mot de passe</button>
                 </form>
             </article>
